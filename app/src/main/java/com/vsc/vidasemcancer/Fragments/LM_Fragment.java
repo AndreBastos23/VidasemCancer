@@ -1,8 +1,5 @@
 package com.vsc.vidasemcancer.Fragments;
 
-/**
- * Created by andre on 21-05-2016.
- */
 
 import android.app.ListFragment;
 import android.os.Bundle;
@@ -23,7 +20,7 @@ public class LM_Fragment extends ListFragment {
                 false);
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 R.layout.mylist, R.id.Itemname, Recipes.Nome);
         setListAdapter(adapter);
         return rootView;

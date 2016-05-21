@@ -10,9 +10,6 @@ import android.view.ViewGroup;
 
 import com.vsc.vidasemcancer.R;
 
-/**
- * Created by Eduardo on 21/05/2016.
- */
 public class RecipeDetailsFragment extends Fragment {
 
     @Nullable
