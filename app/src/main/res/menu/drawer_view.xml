@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/recipes_item"
+            android:title="@string/menu_recipe"
+            android:icon="@drawable/imagemfinal">
+
+
+        </item>
+        <item
+            android:id="@+id/sun_item"
+            android:title="@string/menu_sun"
+            android:icon="@drawable/imagemfinal">
+
+        </item>
+        <item
+            android:id="@+id/exercise_item"
+            android:title="@string/menu_exercise"
+            android:icon="@drawable/imagemfinal">
+
+        </item>
+
+    </group>
+</menu>

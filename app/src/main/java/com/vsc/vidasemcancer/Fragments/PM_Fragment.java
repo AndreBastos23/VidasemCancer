@@ -16,6 +16,14 @@ import com.vsc.vidasemcancer.R;
 
 public class PM_Fragment extends ListFragment {
 
+    public static PM_Fragment newInstance(){
+        return new PM_Fragment();
+    }
+
+    public PM_Fragment(){
+
+    }
+
     private OnRecipeSelected mListener;
 
     @Override

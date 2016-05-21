@@ -9,7 +9,7 @@ import com.vsc.vidasemcancer.Fragments.PM_Fragment;
 import com.vsc.vidasemcancer.Fragments.RecipeDetailsFragment;
 import com.vsc.vidasemcancer.Interface.OnRecipeSelected;
 
-public class TesteActivity extends Activity implements OnRecipeSelected {
+public class TesteActivity extends BaseActivity implements OnRecipeSelected {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -13,6 +13,17 @@ import com.vsc.vidasemcancer.R;
 
 
 public class LM_Fragment extends ListFragment {
+
+
+    public static LM_Fragment newInstance(){
+        return new LM_Fragment();
+    }
+
+    public LM_Fragment(){
+
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

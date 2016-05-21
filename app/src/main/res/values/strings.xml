@@ -15,5 +15,10 @@
     <string name="lunch">Almoço</string>
     <string name="afternoonsnack">Lanche da Tarde</string>
     <string name="dinner">Jantar</string>
+    <string name="menu_recipe">Ementa</string>
+    <string name="menu_sun">Sol</string>
+    <string name="menu_exercise">Exercicio</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 
 </resources>
