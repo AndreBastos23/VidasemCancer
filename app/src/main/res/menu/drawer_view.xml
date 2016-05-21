@@ -4,20 +4,20 @@
         <item
             android:id="@+id/recipes_item"
             android:title="@string/menu_recipe"
-            android:icon="@drawable/bow">
+            android:icon="@drawable/itemone">
 
 
         </item>
         <item
             android:id="@+id/sun_item"
             android:title="@string/menu_sun"
-            android:icon="@drawable/bow">
+            android:icon="@drawable/itemtwo">
 
         </item>
         <item
             android:id="@+id/exercise_item"
             android:title="@string/menu_exercise"
-            android:icon="@drawable/bow">
+            android:icon="@drawable/itemthree">
 
         </item>
 
