@@ -1,6 +1,5 @@
 package com.vsc.vidasemcancer;
 
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
