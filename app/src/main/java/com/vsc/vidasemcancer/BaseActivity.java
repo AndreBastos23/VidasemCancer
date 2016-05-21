@@ -80,7 +80,7 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
         }
 
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+        fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.flContent, fragment).commit();
 
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
@@ -106,7 +106,7 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
     public void onRageComicSelected() {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction =
-                fragmentManager.beginTransaction();
+                fragmentManager.beginTransaction().addToBackStack(null);
 
         RecipeDetailsFragment pm_fragment = new RecipeDetailsFragment();
         fragmentTransaction.replace(R.id.flContent, pm_fragment);

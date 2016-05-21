@@ -7,12 +7,11 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:gravity="bottom">
 
-    <TextView
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Header"
-        android:textColor="@android:color/white"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-    />
+        android:scaleType="centerCrop"
+        android:src="@drawable/vidasemcancer"
+        android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>
