@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 
 import butterknife.ButterKnife;
@@ -81,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginSuccess() {
         _loginButton.setEnabled(true);
 
-        Intent activityChangeIntent = new Intent(LoginActivity.this, TesteActivity.class);
+        Intent activityChangeIntent = new Intent(LoginActivity.this, BaseActivity.class);
         LoginActivity.this.startActivity(activityChangeIntent);
         finish();
 
