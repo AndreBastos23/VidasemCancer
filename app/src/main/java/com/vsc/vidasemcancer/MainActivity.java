@@ -25,11 +25,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }
+
     }
 
     @Override
@@ -57,35 +53,5 @@ public class MainActivity extends ActionBarActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
 
-
-        private ArrayAdapter<String> timeOfDayAdapter;
-        private ListView saveListView;
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
-            saveListView = (ListView) rootView.findViewById(R.id.listview_recipes);
-            String[] timeOfDay = {"Café da Manha", "2", "3", "4", "5"};
-
-
-            List<String> timeOfDayList = Arrays.asList(timeOfDay);
-
-            timeOfDayAdapter = new ArrayAdapter<>(getActivity(), R.layout.list_recipes, R.id.time_of_day_textview, timeOfDayList);
-
-
-            saveListView.setAdapter(timeOfDayAdapter);
-
-            return rootView;
-        }
-
-
-    }
 }
