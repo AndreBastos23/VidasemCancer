@@ -4,25 +4,38 @@ package com.vsc.vidasemcancer.Fragments;
  * Created by andre on 21-05-2016.
  */
 
-import android.app.Fragment;
 import android.app.ListFragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.vsc.vidasemcancer.Data.Recipes;
+import com.vsc.vidasemcancer.Interface.OnRecipeSelected;
 import com.vsc.vidasemcancer.R;
 
 
 public class PM_Fragment extends ListFragment {
+
+    private OnRecipeSelected mListener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        mListener = (OnRecipeSelected) context;
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
 
-        View rootView = inflater.inflate(R.layout.pm_fragment, container,
+        View rootView = inflater.inflate(R.layout.fragment_pm, container,
                 false);
 
 
@@ -32,5 +45,12 @@ public class PM_Fragment extends ListFragment {
         return rootView;
 
 
+    }
+
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        mListener.onRageComicSelected();
     }
 }

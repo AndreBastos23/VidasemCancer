@@ -12,8 +12,10 @@ import android.os.Bundle;
 
 import com.vsc.vidasemcancer.Fragments.LM_Fragment;
 import com.vsc.vidasemcancer.Fragments.PM_Fragment;
+import com.vsc.vidasemcancer.Fragments.RecipeDetailsFragment;
+import com.vsc.vidasemcancer.Interface.OnRecipeSelected;
 
-public class TesteActivity extends Activity {
+public class TesteActivity extends Activity implements OnRecipeSelected {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,4 +34,15 @@ public class TesteActivity extends Activity {
     }
 
 
+    @Override
+    public void onRageComicSelected() {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction =
+                fragmentManager.beginTransaction();
+
+        RecipeDetailsFragment pm_fragment = new RecipeDetailsFragment();
+        fragmentTransaction.replace(android.R.id.content, pm_fragment);
+
+        fragmentTransaction.commit();
+    }
 }
