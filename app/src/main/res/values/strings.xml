@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">VidasemCancer</string>
+    <string name="username">Utilizador</string>
+    <string name="password">Password</string>
+    <string name="rememberMe">Lembrar-me?</string>
+    <string name="loginButtonText">Entrar</string>
+    <string name="registerButtonText">Registar</string>
+    <string name="forgottenPassword">Esqueci-me da Password</string>
+    <string name="ourLogo">This is our logo!</string>
 </resources>
