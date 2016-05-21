@@ -10,4 +10,10 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_sd">sd</string>
+    <string name="breakfast">Café da Manhã</string>
+    <string name="morningsnack">Lanche da Manhã</string>
+    <string name="lunch">Almoço</string>
+    <string name="afternoonsnack">Lanche da Tarde</string>
+    <string name="dinner">Jantar</string>
+
 </resources>

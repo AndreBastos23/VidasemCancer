@@ -1,5 +1,6 @@
 package com.vsc.vidasemcancer;
 
+import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -58,7 +59,9 @@ public class MainActivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
-        private ArrayAdapter<String> recipeAdapter;
+
+        private ArrayAdapter<String> timeOfDayAdapter;
+        private ListView saveListView;
 
         public PlaceholderFragment() {
         }
@@ -66,17 +69,23 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-            String[] recipes = { "Atum1" , "Atum1", "Atum1" , "Atum1", "Atum"};
+            saveListView = (ListView) rootView.findViewById(R.id.listview_recipes);
+            String[] timeOfDay = {"Café da Manha", "2", "3", "4", "5"};
 
-            List<String> recipeList = Arrays.asList(recipes);
 
-            recipeAdapter = new ArrayAdapter<String>(getActivity(), R.layout.list_recipes, R.id.list_item_recipes_textview, recipeList);
+            List<String> timeOfDayList = Arrays.asList(timeOfDay);
 
-            ListView listView = (ListView) rootView.findViewById(R.id.listview_recipes);
-            listView.setAdapter(recipeAdapter);
+            timeOfDayAdapter = new ArrayAdapter<>(getActivity(), R.layout.list_recipes, R.id.time_of_day_textview, timeOfDayList);
+
+
+            saveListView.setAdapter(timeOfDayAdapter);
+
             return rootView;
         }
+
+
     }
 }
