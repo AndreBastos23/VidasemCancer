@@ -19,6 +19,10 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".sd"
+            android:label="@string/title_activity_sd"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

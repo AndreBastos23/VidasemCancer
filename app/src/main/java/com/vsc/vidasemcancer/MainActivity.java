@@ -8,9 +8,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +58,8 @@ public class MainActivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
+        private ArrayAdapter<String> recipeAdapter;
+
         public PlaceholderFragment() {
         }
 
@@ -57,6 +67,15 @@ public class MainActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+            String[] recipes = { "Atum1" , "Atum1", "Atum1" , "Atum1", "Atum"};
+
+            List<String> recipeList = Arrays.asList(recipes);
+
+            recipeAdapter = new ArrayAdapter<String>(getActivity(), R.layout.list_recipes, R.id.list_item_recipes_textview, recipeList);
+
+            ListView listView = (ListView) rootView.findViewById(R.id.listview_recipes);
+            listView.setAdapter(recipeAdapter);
             return rootView;
         }
     }

@@ -69,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void run() {
                         // On complete call either onLoginSuccess or onLoginFailed
                         onLoginSuccess();
+
                         // onLoginFailed();
                         progressDialog.dismiss();
                     }
@@ -104,6 +105,8 @@ public class LoginActivity extends AppCompatActivity {
 
         Intent activityChangeIntent = new Intent(LoginActivity.this, MainActivity.class);
         LoginActivity.this.startActivity(activityChangeIntent);
+        finish();
+
     }
 
 
