@@ -30,7 +30,7 @@
             android:name=".BaseActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-
+        <receiver android:name=".NotifyService"/>
     </application>
 
 </manifest>
