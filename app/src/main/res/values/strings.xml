@@ -20,5 +20,6 @@
     <string name="menu_exercise">Exercicio</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-
+    <string name="water_warning_setting">Aviso regular para beber água</string>
+    <string name="menu_settings">Definições</string>
 </resources>
