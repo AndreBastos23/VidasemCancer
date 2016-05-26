@@ -20,7 +20,7 @@
     <string name="menu_exercise">Exercicio</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    <string name="water_warning_setting">Aviso regular para beber água</string>
+    <string name="water.warning.setting">Aviso regular para beber água</string>
     <string name="menu_settings">Definições</string>
     <string name="title_activity_register">Register</string>
     <string name="register_inputUser">Utilizador</string>
@@ -33,8 +33,8 @@
     aplicação, por favor modifique as preferencias de acordo com aquilo que prefere</string>
     <string name="alert_dialog_title">Preferencias</string>
     <string name="water_settings">Avisos de água</string>
-    <string name="water_warning_interval">Intervalo do aviso</string>
-    <string name="water_warning_qtty">Quantidade a acrescentar</string>
+    <string name="water.warning.interval">Intervalo do aviso</string>
+    <string name="water.warning.qtty">Quantidade a acrescentar</string>
     <string name="breathe_settings">Aviso de respiração</string>
     <string name="eat_settings">Aviso de alimentação</string>
     <string name="sun_settings">Aviso para apanhar sol</string>
@@ -42,8 +42,15 @@
     <string name="eat_warning_settings">Avisos de alimentação</string>
     <string name="sun_warning_settings">Aviso para apanhar sol</string>
     <string name="water_interval_default">1</string>
-    <string name="water_qtty_default">300</string>
-    <string name="water_warning_qtty_summary">Seleccione a dose média que irá beber</string>
-    <string name="water_warning_interval_summary">Seleccione intervalo de aviso</string>
+    <string name="water.qtty_default">300</string>
+    <string name="water.warning.qtty_summary">Seleccione a dose média que irá beber</string>
+    <string name="water.warning.interval_summary">Seleccione intervalo de aviso</string>
+    <string name="water.warning.key">water_warning</string>
+    <string name="water.warning.interval_key">water.warning.interval</string>
+    <string name="water.warning.qtty_key">water.warning.qtty</string>
+    <string name="water_category_key">water_settings</string>
+    <string name="breathe_category_key">breathe_settings</string>
+    <string name="breathe_warning_key">breathe_warning</string>
+    <string name="breathe_warning_time_title">Hora do aviso</string>
 
 </resources>

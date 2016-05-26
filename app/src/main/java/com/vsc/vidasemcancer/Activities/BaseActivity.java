@@ -18,8 +18,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.vsc.vidasemcancer.Fragments.PM_Fragment;
 import com.vsc.vidasemcancer.Fragments.RecipeDetailsFragment;
+import com.vsc.vidasemcancer.Fragments.RecipesListFragment;
 import com.vsc.vidasemcancer.Fragments.SettingsDialogFragment;
 import com.vsc.vidasemcancer.Fragments.SettingsFragment;
 import com.vsc.vidasemcancer.Interface.OnRecipeSelected;
@@ -29,6 +29,9 @@ import com.vsc.vidasemcancer.Receivers.NotifyService;
 import java.util.Calendar;
 
 
+/**
+ * The type Base activity.
+ */
 public class BaseActivity extends AppCompatActivity implements OnRecipeSelected {
 
     private DrawerLayout mDrawer;
@@ -41,44 +44,55 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+        setupToolbar();
 
+        //Code to execute on application's first run
         if (isFirstTime()) {
 
-            Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
-            setSupportActionBar(myToolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            drawerToggle = setupDrawerToggle();
-            mDrawer.addDrawerListener(drawerToggle);
-            nvDrawer = (NavigationView) findViewById(R.id.nvView);
-            setupDrawerContent(nvDrawer);
-
-            Fragment fragment = null;
-            Class fragmentClass = SettingsFragment.class;
-            try {
-                fragment = (Fragment) fragmentClass.newInstance();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.flContent, fragment).commit();
-            showDialog();
-        } else {
-
-            Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
-            setSupportActionBar(myToolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            drawerToggle = setupDrawerToggle();
-            mDrawer.addDrawerListener(drawerToggle);
-            nvDrawer = (NavigationView) findViewById(R.id.nvView);
-            setupDrawerContent(nvDrawer);
+            handleFirstRun();
         }
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        Boolean waterWarning = preferences.getBoolean("water_warning", true);
-        rememberWater(waterWarning);
+
+
     }
 
+    private void handleFirstRun() {
+
+        //handle first creation of notifications
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        Boolean waterWarning = preferences.getBoolean(getString(R.string.water_warning_key), true);
+        rememberWater(waterWarning);
+
+        //open settings fragment
+        Fragment fragment = null;
+        Class fragmentClass = SettingsFragment.class;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.flContent, fragment).commit();
+
+        //show first time dialog
+        showDialog();
+    }
+
+    private void setupToolbar() {
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerToggle = setupDrawerToggle();
+        mDrawer.addDrawerListener(drawerToggle);
+        nvDrawer = (NavigationView) findViewById(R.id.nvView);
+        setupDrawerContent(nvDrawer);
+    }
+
+    /**
+     * Remember water.
+     *
+     * @param config the config
+     */
     public void rememberWater(Boolean config) {
         Calendar calendar = Calendar.getInstance();
 
@@ -108,24 +122,23 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
         });
     }
 
+    /**
+     * Select drawer item.
+     *
+     * @param menuItem the menu item
+     */
     public void selectDrawerItem(MenuItem menuItem) {
         Fragment fragment = null;
         Class fragmentClass;
         switch (menuItem.getItemId()) {
             case R.id.recipes_item:
-                fragmentClass = PM_Fragment.class;
-                break;
-            case R.id.sun_item:
-                fragmentClass = PM_Fragment.class;
-                break;
-            case R.id.exercise_item:
-                fragmentClass = PM_Fragment.class;
+                fragmentClass = RecipesListFragment.class;
                 break;
             case R.id.settings_item:
                 fragmentClass = SettingsFragment.class;
                 break;
             default:
-                fragmentClass = PM_Fragment.class;
+                fragmentClass = RecipesListFragment.class;
         }
 
         try {
@@ -162,7 +175,7 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
     }
 
     @Override
-    public void onRageComicSelected() {
+    public void onRecipeSelected() {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction =
                 fragmentManager.beginTransaction().addToBackStack(null);
@@ -192,6 +205,9 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
         return !ranBefore;
     }
 
+    /**
+     * Show dialog.
+     */
     void showDialog() {
         DialogFragment newFragment = SettingsDialogFragment.newInstance(R.string.alert_dialog_title, R.string.alert_dialog_message);
         newFragment.show(getSupportFragmentManager(), "dialog");

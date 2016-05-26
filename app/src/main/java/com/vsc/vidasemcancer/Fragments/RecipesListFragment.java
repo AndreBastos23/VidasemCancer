@@ -14,16 +14,16 @@ import com.vsc.vidasemcancer.R;
 import com.vsc.vidasemcancer.entities.Recipes;
 
 
-public class PM_Fragment extends ListFragment {
+public class RecipesListFragment extends ListFragment {
 
     private OnRecipeSelected mListener;
 
-    public PM_Fragment(){
+    public RecipesListFragment() {
 
     }
 
-    public static PM_Fragment newInstance() {
-        return new PM_Fragment();
+    public static RecipesListFragment newInstance() {
+        return new RecipesListFragment();
     }
 
     @Override
@@ -55,6 +55,6 @@ public class PM_Fragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        mListener.onRageComicSelected();
+        mListener.onRecipeSelected();
     }
 }

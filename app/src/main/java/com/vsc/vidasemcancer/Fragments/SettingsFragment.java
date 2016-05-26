@@ -2,7 +2,6 @@ package com.vsc.vidasemcancer.Fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
 import com.vsc.vidasemcancer.Activities.BaseActivity;
@@ -29,16 +28,11 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals("water_warning")) {
-            Preference connectionPref = findPreference(key);
+        if (key.equals(getString(R.string.water_warning_key))) {
+            Boolean setting = sharedPreferences.getBoolean(getString(R.string.water_warning_key), true);
+            BaseActivity baseActivity = (BaseActivity) getActivity();
+            baseActivity.rememberWater(setting);
 
-            Boolean setting = sharedPreferences.getBoolean("water_warning", true);
-            BaseActivity thi = (BaseActivity) getActivity();
-            thi.rememberWater(setting);
-
-
-            // Set summary to be the user-description for the selected value
-            connectionPref.setSummary(String.valueOf(sharedPreferences.getBoolean(key, true)));
         }
     }
 

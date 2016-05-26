@@ -5,21 +5,8 @@
             android:id="@+id/recipes_item"
             android:icon="@drawable/itemone"
             android:title="@string/menu_recipe">
-
-
         </item>
-        <item
-            android:id="@+id/sun_item"
-            android:icon="@drawable/itemtwo"
-            android:title="@string/menu_sun">
 
-        </item>
-        <item
-            android:id="@+id/exercise_item"
-            android:icon="@drawable/itemthree"
-            android:title="@string/menu_exercise">
-
-        </item>
         <item
             android:id="@+id/settings_item"
             android:icon="@drawable/itemthree"

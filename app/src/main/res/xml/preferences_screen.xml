@@ -2,47 +2,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <PreferenceCategory
-        android:key="water_settings"
+        android:key="@string/water_category_key"
         android:title="@string/water_settings">
         <CheckBoxPreference
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:defaultValue="true"
-            android:key="water_warning"
-            android:title="@string/water_warning_setting" />
+            android:key="@string/water.warning.key"
+            android:title="@string/water.warning.setting" />
         <ListPreference
             android:defaultValue="@string/water_interval_default"
-            android:dependency="water_warning"
+            android:dependency="@string/water.warning.key"
             android:entries="@array/water_interval_entries"
             android:entryValues="@array/water_interval_entryvalues"
-            android:key="water_warning_interval"
-            android:summary="@string/water_warning_interval_summary"
-            android:title="@string/water_warning_interval" />
+            android:key="@string/water.warning.interval_key"
+            android:summary="@string/water.warning.interval_summary"
+            android:title="@string/water.warning.interval" />
 
         <ListPreference
-            android:defaultValue="@string/water_qtty_default"
-            android:dependency="water_warning"
+            android:defaultValue="@string/water.qtty_default"
+            android:dependency="@string/water.warning.key"
             android:entries="@array/water_qtty_entries"
             android:entryValues="@array/water_qtty_entryvalues"
-            android:key="water_warning_qtty"
-            android:summary="@string/water_warning_qtty_summary"
-            android:title="@string/water_warning_qtty" />
+            android:key="@string/water.warning.qtty_key"
+            android:summary="@string/water.warning.qtty_summary"
+            android:title="@string/water.warning.qtty" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="breathe_settings"
+        android:key="@string/breathe_category_key"
         android:title="@string/breathe_settings">
         <CheckBoxPreference
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:defaultValue="true"
-            android:key="breathe_warning"
+            android:key="@string/breathe_warning_key"
             android:title="@string/breathe_warning_setting" />
         <com.vsc.vidasemcancer.Preferences.TimePreference
             android:defaultValue="12:00"
-            android:dependency="breathe_warning"
-            android:title="Hora do aviso" />
+            android:dependency="@string/breathe_warning_key"
+            android:title="@string/breathe_warning_time_title" />
     </PreferenceCategory>
 
     <PreferenceCategory
