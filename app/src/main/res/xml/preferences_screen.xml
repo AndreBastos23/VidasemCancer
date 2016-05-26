@@ -1,13 +1,76 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <PreferenceCategory
+        android:key="water_settings"
+        android:title="@string/water_settings">
+        <CheckBoxPreference
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:defaultValue="true"
+            android:key="water_warning"
+            android:title="@string/water_warning_setting" />
+        <ListPreference
+            android:defaultValue="@string/water_interval_default"
+            android:dependency="water_warning"
+            android:entries="@array/water_interval_entries"
+            android:entryValues="@array/water_interval_entryvalues"
+            android:key="water_warning_interval"
+            android:summary="@string/water_warning_interval_summary"
+            android:title="@string/water_warning_interval" />
 
-    <CheckBoxPreference
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:defaultValue="true"
-        android:key="water_warning"
-        android:title="@string/water_warning_setting" />
+        <ListPreference
+            android:defaultValue="@string/water_qtty_default"
+            android:dependency="water_warning"
+            android:entries="@array/water_qtty_entries"
+            android:entryValues="@array/water_qtty_entryvalues"
+            android:key="water_warning_qtty"
+            android:summary="@string/water_warning_qtty_summary"
+            android:title="@string/water_warning_qtty" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="breathe_settings"
+        android:title="@string/breathe_settings">
+        <CheckBoxPreference
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:defaultValue="true"
+            android:key="breathe_warning"
+            android:title="@string/breathe_warning_setting" />
+        <com.vsc.vidasemcancer.Preferences.TimePreference
+            android:defaultValue="12:00"
+            android:dependency="breathe_warning"
+            android:title="Hora do aviso" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="eat_settngs"
+        android:title="@string/eat_settings">
+        <CheckBoxPreference
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:defaultValue="true"
+            android:key="eat_warning"
+            android:title="@string/eat_warning_settings" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="sun_settings"
+        android:title="@string/sun_settings">
+        <CheckBoxPreference
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:defaultValue="true"
+            android:key="sun_warning"
+            android:title="@string/sun_warning_settings" />
+        <com.vsc.vidasemcancer.Preferences.TimePreference
+            android:defaultValue="12:00"
+            android:dependency="sun_warning"
+            android:title="Hora do aviso" />
+    </PreferenceCategory>
 
 
 </PreferenceScreen>
