@@ -77,7 +77,7 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
         rememberWater(waterWarning);
     }
 
-    private void rememberWater(Boolean config) {
+    public void rememberWater(Boolean config) {
         Calendar calendar = Calendar.getInstance();
 
         Intent myIntent = new Intent(BaseActivity.this, NotifyService.class);
