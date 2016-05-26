@@ -8,9 +8,6 @@ import android.preference.PreferenceFragment;
 import com.vsc.vidasemcancer.BaseActivity;
 import com.vsc.vidasemcancer.R;
 
-/**
- * Created by Eduardo on 24/05/2016.
- */
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     public SettingsFragment() {

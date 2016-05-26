@@ -27,6 +27,11 @@
     <string name="register_inputPassword">Password</string>
     <string name="register_regButton">Registar</string>
     <string name="title_activity_item_list">ItemList</string>
+    <string name="splash_screen_text">Bem Vindo ao Vida sem Cancer</string>
+    <string name="title_activity_start">StartActivity</string>
+    <string name="alert_dialog_message">Bem vindo, Visto ser a primeira vez que está a entrar na nossa
+    aplicação, por favor modifique as preferencias de acordo com aquilo que prefere</string>
+    <string name="alert_dialog_title">Preferencias</string>
     <string name="water_settings">Avisos de água</string>
     <string name="water_warning_interval">Intervalo do aviso</string>
     <string name="water_warning_qtty">Quantidade a acrescentar</string>
