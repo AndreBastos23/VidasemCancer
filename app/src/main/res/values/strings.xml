@@ -27,5 +27,18 @@
     <string name="register_inputPassword">Password</string>
     <string name="register_regButton">Registar</string>
     <string name="title_activity_item_list">ItemList</string>
+    <string name="water_settings">Avisos de água</string>
+    <string name="water_warning_interval">Intervalo do aviso</string>
+    <string name="water_warning_qtty">Quantidade a acrescentar</string>
+    <string name="breathe_settings">Aviso de respiração</string>
+    <string name="eat_settings">Aviso de alimentação</string>
+    <string name="sun_settings">Aviso para apanhar sol</string>
+    <string name="breathe_warning_setting">Avisar diariamente para respirar</string>
+    <string name="eat_warning_settings">Avisos de alimentação</string>
+    <string name="sun_warning_settings">Aviso para apanhar sol</string>
+    <string name="water_interval_default">1</string>
+    <string name="water_qtty_default">300</string>
+    <string name="water_warning_qtty_summary">Seleccione a dose média que irá beber</string>
+    <string name="water_warning_interval_summary">Seleccione intervalo de aviso</string>
 
 </resources>
