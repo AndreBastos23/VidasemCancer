@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.vsc.vidasemcancer">
 
-    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -35,14 +36,18 @@
 
         <service
             android:name=".Services.NotificationService"
-            android:enabled="true"></service>
+            android:enabled="true"/>
 
         <receiver
             android:name=".NotifyService"
-            android:process=":remote"></receiver>
-
-
+            android:process=":remote"/>
+        <activity
+            android:name=".ItemsListActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
-
-
 </manifest>

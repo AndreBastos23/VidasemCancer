@@ -22,4 +22,10 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="water_warning_setting">Aviso regular para beber água</string>
     <string name="menu_settings">Definições</string>
+    <string name="title_activity_register">Register</string>
+    <string name="register_inputUser">Utilizador</string>
+    <string name="register_inputPassword">Password</string>
+    <string name="register_regButton">Registar</string>
+    <string name="title_activity_item_list">ItemList</string>
+
 </resources>

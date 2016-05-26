@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.TextView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -19,6 +19,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @InjectView(R.id.btn_login)
     Button _loginButton;
+    @InjectView(R.id.link_signup)
+    TextView _signupLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,18 @@ public class LoginActivity extends AppCompatActivity {
                 login();
             }
         });
+
+
+        _signupLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start the Signup activity
+                Intent intent = new Intent(getApplicationContext(), ItemsListActivity.class);
+                startActivityForResult(intent, REQUEST_SIGNUP);
+            }
+        });
     }
+
 
     public void login() {
         Log.d(TAG, "Login");
