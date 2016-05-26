@@ -53,9 +53,7 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         Boolean waterWarning = preferences.getBoolean("water_warning", true);
 
-        rememberSun();
-        rememberWater();
-        rememberBreathe();
+        rememberWater(waterWarning);
 
 
     }
@@ -69,15 +67,22 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
         scheduleNotification(notification, 5000, "sun");
 
     }
-    private void rememberWater() {
-        Notification.Builder builder = new Notification.Builder(this);
-        builder.setContentTitle("Vida sem Cancer");
-        builder.setContentText("Hey, já bebeu água hoje?");
-        builder.setSmallIcon(R.drawable.imagemfinal);
-        Notification notification = builder.build();
-        scheduleNotification(notification, 7500, "water");
+
+    private void rememberWater(Boolean config) {
+        Calendar calendar = Calendar.getInstance();
+
+        Intent myIntent = new Intent(BaseActivity.this, NotifyService.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(BaseActivity.this, 0, myIntent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        if (config) {
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 30 * 1000, pendingIntent);
+        } else {
+            alarmManager.cancel(pendingIntent);
+        }
+
 
     }
+
     private void rememberBreathe() {
         Notification.Builder builder = new Notification.Builder(this);
         builder.setContentTitle("Vida sem Cancer");
@@ -129,7 +134,10 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
         }
 
         FragmentManager fragmentManager = getFragmentManager();
+
+
         fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.flContent, fragment).commit();
+
 
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());

@@ -1,8 +1,11 @@
 package com.vsc.vidasemcancer.Fragments;
 
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+
+import com.vsc.vidasemcancer.R;
 
 /**
  * Created by Eduardo on 24/05/2016.
@@ -18,6 +21,14 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Load the preferences from an XML resource
+        addPreferencesFromResource(R.xml.preferences_screen);
+    }
+
+    @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("water_warning")) {
             Preference connectionPref = findPreference(key);
@@ -26,17 +37,5 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getPreferenceScreen().getSharedPreferences()
-                .registerOnSharedPreferenceChangeListener(this);
-    }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        getPreferenceScreen().getSharedPreferences()
-                .unregisterOnSharedPreferenceChangeListener(this);
-    }
 }
