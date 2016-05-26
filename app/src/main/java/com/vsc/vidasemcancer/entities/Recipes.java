@@ -1,4 +1,4 @@
-package com.vsc.vidasemcancer.Data;
+package com.vsc.vidasemcancer.entities;
 
 public class Recipes {
 

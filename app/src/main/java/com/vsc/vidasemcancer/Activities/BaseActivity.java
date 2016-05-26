@@ -1,4 +1,4 @@
-package com.vsc.vidasemcancer;
+package com.vsc.vidasemcancer.Activities;
 
 import android.app.AlarmManager;
 import android.app.Fragment;
@@ -23,6 +23,8 @@ import com.vsc.vidasemcancer.Fragments.RecipeDetailsFragment;
 import com.vsc.vidasemcancer.Fragments.SettingsDialogFragment;
 import com.vsc.vidasemcancer.Fragments.SettingsFragment;
 import com.vsc.vidasemcancer.Interface.OnRecipeSelected;
+import com.vsc.vidasemcancer.R;
+import com.vsc.vidasemcancer.Receivers.NotifyService;
 
 import java.util.Calendar;
 

@@ -14,7 +14,7 @@ import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
-import com.vsc.vidasemcancer.BaseActivity;
+import com.vsc.vidasemcancer.Activities.BaseActivity;
 import com.vsc.vidasemcancer.R;
 
 /**

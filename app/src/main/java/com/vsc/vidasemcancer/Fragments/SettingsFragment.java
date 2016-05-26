@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
-import com.vsc.vidasemcancer.BaseActivity;
+import com.vsc.vidasemcancer.Activities.BaseActivity;
 import com.vsc.vidasemcancer.R;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {

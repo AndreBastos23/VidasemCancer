@@ -1,4 +1,4 @@
-package com.vsc.vidasemcancer;
+package com.vsc.vidasemcancer.Receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,10 +10,6 @@ import com.vsc.vidasemcancer.Services.NotificationService;
  * Created by Eduardo on 22/05/2016.
  */
 public class NotifyService extends BroadcastReceiver {
-
-    private static final long REPEAT_TIME = 1000 * 30;
-    public static String NOTIFICATION_ID = "notification-id";
-    public static String NOTIFICATION = "notification";
 
     @Override
     public void onReceive(Context context, Intent intent) {

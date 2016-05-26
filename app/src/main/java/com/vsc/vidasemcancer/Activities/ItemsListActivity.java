@@ -1,16 +1,13 @@
-package com.vsc.vidasemcancer;
+package com.vsc.vidasemcancer.Activities;
 
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ArrayAdapter;
 
+import com.vsc.vidasemcancer.R;
+import com.vsc.vidasemcancer.RestOperation;
 import com.vsc.vidasemcancer.entities.User;
 
 import java.util.List;

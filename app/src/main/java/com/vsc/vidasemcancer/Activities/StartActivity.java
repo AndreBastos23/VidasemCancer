@@ -1,9 +1,11 @@
-package com.vsc.vidasemcancer;
+package com.vsc.vidasemcancer.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+
+import com.vsc.vidasemcancer.R;
 
 public class StartActivity extends AppCompatActivity {
 

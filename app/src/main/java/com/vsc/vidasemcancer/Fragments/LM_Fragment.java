@@ -8,26 +8,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-import com.vsc.vidasemcancer.Data.Recipes;
 import com.vsc.vidasemcancer.R;
+import com.vsc.vidasemcancer.entities.Recipes;
 
 
 public class LM_Fragment extends ListFragment {
 
 
-    public static LM_Fragment newInstance(){
-        return new LM_Fragment();
-    }
-
     public LM_Fragment(){
 
     }
 
+    public static LM_Fragment newInstance() {
+        return new LM_Fragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_pm, container,
+        View rootView = inflater.inflate(R.layout.fragment_recipes_list, container,
                 false);
 
 

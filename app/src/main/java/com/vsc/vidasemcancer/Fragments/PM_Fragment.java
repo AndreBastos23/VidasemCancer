@@ -9,22 +9,22 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.vsc.vidasemcancer.Data.Recipes;
 import com.vsc.vidasemcancer.Interface.OnRecipeSelected;
 import com.vsc.vidasemcancer.R;
+import com.vsc.vidasemcancer.entities.Recipes;
 
 
 public class PM_Fragment extends ListFragment {
 
-    public static PM_Fragment newInstance(){
-        return new PM_Fragment();
-    }
+    private OnRecipeSelected mListener;
 
     public PM_Fragment(){
 
     }
 
-    private OnRecipeSelected mListener;
+    public static PM_Fragment newInstance() {
+        return new PM_Fragment();
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -39,7 +39,7 @@ public class PM_Fragment extends ListFragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
 
-        View rootView = inflater.inflate(R.layout.fragment_pm, container,
+        View rootView = inflater.inflate(R.layout.fragment_recipes_list, container,
                 false);
 
 
