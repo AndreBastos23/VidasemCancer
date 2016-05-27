@@ -22,6 +22,7 @@ import com.vsc.vidasemcancer.Fragments.RecipeDetailsFragment;
 import com.vsc.vidasemcancer.Fragments.RecipesListFragment;
 import com.vsc.vidasemcancer.Fragments.SettingsDialogFragment;
 import com.vsc.vidasemcancer.Fragments.SettingsFragment;
+import com.vsc.vidasemcancer.Fragments.WaterFragment;
 import com.vsc.vidasemcancer.Interface.OnRecipeSelected;
 import com.vsc.vidasemcancer.R;
 import com.vsc.vidasemcancer.Receivers.NotifyService;
@@ -219,8 +220,8 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
         Fragment fragment = null;
         Class fragmentClass;
         switch (menuItem.getItemId()) {
-            case R.id.recipes_item:
-                fragmentClass = RecipesListFragment.class;
+            case R.id.water_item:
+                fragmentClass = WaterFragment.class;
                 break;
             case R.id.settings_item:
                 fragmentClass = SettingsFragment.class;

@@ -63,4 +63,8 @@
     <string name="sun.time.key">sun.time.key</string>
     <string name="breathe.time.key">breathe.time.key</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_water">Água</string>
+
 </resources>
