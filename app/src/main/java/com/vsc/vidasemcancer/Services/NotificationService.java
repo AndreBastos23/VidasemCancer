@@ -80,8 +80,8 @@ public class NotificationService extends IntentService {
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         notification = new NotificationCompat.Builder(this)
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.imagemfinal)
-                .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.imagemfinal))
+                .setSmallIcon(R.drawable.bow)
+                .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.water_100))
                 .setTicker("ticker value")
                 .setAutoCancel(true)
                 .setPriority(8)

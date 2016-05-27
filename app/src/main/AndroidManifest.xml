@@ -20,16 +20,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".Activities.LoginActivity"
             android:label="Login Activity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".TesteActivity"
-            android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.BaseActivity"

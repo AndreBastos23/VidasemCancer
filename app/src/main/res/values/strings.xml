@@ -66,6 +66,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menu_water">Água</string>
-    <string name="graph.label">Quantidade de água</string>
+    <string name="graph.label">Quantidade de água em Litros</string>
+    <string name="water_value_textview">Hoje bebeu:</string>
+    <string name="water_unit">Litros</string>
 
 </resources>
