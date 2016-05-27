@@ -53,11 +53,13 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
         setupToolbar();
 
         //Code to execute on application's first run
-        if (isFirstTime()) {
+        if (savedInstanceState == null) {
+            if (isFirstTime()) {
 
-            handleFirstRun();
-        } else {
-            handleInitialFragment();
+                handleFirstRun();
+            } else {
+                handleInitialFragment();
+            }
         }
 
 

@@ -190,6 +190,7 @@ public class WaterFragment extends Fragment {
         yAxisLeft.setDrawLabels(false);
         yAxisLeft.setAxisMinValue(0);
 
+
         yAxisLeft.removeAllLimitLines();
 
         LimitLine limitLine = new LimitLine((float) waterObject.getObjective() / 1000);
@@ -198,6 +199,8 @@ public class WaterFragment extends Fragment {
         yAxisLeft.addLimitLine(limitLine);
         yAxisLeft.setDrawLimitLinesBehindData(true);
 
+        lineChart.setDoubleTapToZoomEnabled(false);
+        lineChart.setTouchEnabled(false);
         lineChart.setDescription("");
         lineChart.setData(data);
         lineChart.invalidate(); // refresh
