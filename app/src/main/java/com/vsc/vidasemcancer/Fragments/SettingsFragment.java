@@ -28,11 +28,15 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(getString(R.string.water_warning_key))) {
-            Boolean setting = sharedPreferences.getBoolean(getString(R.string.water_warning_key), true);
-            BaseActivity baseActivity = (BaseActivity) getActivity();
-            baseActivity.rememberWater(setting);
-
+        BaseActivity baseActivity = (BaseActivity) getActivity();
+        if (key.equals(getString(R.string.water_warning_key)) || key.equals(getString(R.string.water_warning_interval_key))) {
+            baseActivity.rememberWater(sharedPreferences);
+        } else if (key.equals(getString(R.string.sun_warning_key)) || key.equals(getString(R.string.sun_time_key))) {
+            baseActivity.rememberSun(sharedPreferences);
+        } else if (key.equals(getString(R.string.breathe_warning_key)) || key.equals(getString(R.string.breathe_time_key))) {
+            baseActivity.rememberBreathe(sharedPreferences);
+        } else if (key.equals(getString(R.string.eat_warning_key))) {
+            baseActivity.rememberFood(sharedPreferences);
         }
     }
 
