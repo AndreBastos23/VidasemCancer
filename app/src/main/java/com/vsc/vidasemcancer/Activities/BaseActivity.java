@@ -117,7 +117,7 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
         calendar.set(Calendar.HOUR_OF_DAY, Integer.valueOf(params[0]));
         calendar.set(Calendar.MINUTE, Integer.valueOf(params[1]));
         if (sunWarning) {
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 24 * 3600 * 1000, sunIntent);
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, sunIntent);
         } else {
             alarmManager.cancel(sunIntent);
         }
@@ -125,7 +125,14 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
     }
 
     public void rememberFood(SharedPreferences preferences) {
-        Calendar calendar = Calendar.getInstance();
+        Calendar breakfastCalendar = Calendar.getInstance();
+        breakfastCalendar.set(Calendar.HOUR_OF_DAY, 9);
+
+        Calendar lunchCalendar = Calendar.getInstance();
+        lunchCalendar.set(Calendar.HOUR_OF_DAY, 13);
+
+        Calendar dinnerCalendar = Calendar.getInstance();
+        dinnerCalendar.set(Calendar.HOUR_OF_DAY, 21);
 
         Intent bfIntent = new Intent(BaseActivity.this, NotifyService.class);
         bfIntent.setAction(getString(R.string.eat_breakfast_notification));
@@ -143,9 +150,9 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
         Boolean foodWarning = preferences.getBoolean(getString(R.string.eat_warning_key), true);
 
         if (foodWarning) {
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 24 * 3600 * 1000, breakFastIntent);
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 24 * 3600 * 1000, lunchIntent);
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 24 * 3600 * 1000, dinnerIntent);
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, breakfastCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, breakFastIntent);
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, lunchCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, lunchIntent);
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, dinnerCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, dinnerIntent);
         } else {
             alarmManager.cancel(breakFastIntent);
             alarmManager.cancel(lunchIntent);
@@ -168,7 +175,7 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
         calendar.set(Calendar.HOUR_OF_DAY, Integer.valueOf(params[0]));
         calendar.set(Calendar.MINUTE, Integer.valueOf(params[1]));
         if (breatheWarning) {
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 24 * 3600 * 1000, pendingIntent);
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
         } else {
             alarmManager.cancel(pendingIntent);
         }
@@ -203,7 +210,7 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
         String interval = preferences.getString(getString(R.string.water_warning_interval_key), getString(R.string.water_interval_default));
 
         if (waterWarning) {
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), Integer.parseInt(interval) * 3600 * 1000, pendingIntent);
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), Long.valueOf(interval) * AlarmManager.INTERVAL_HOUR, pendingIntent);
         } else {
             alarmManager.cancel(pendingIntent);
         }

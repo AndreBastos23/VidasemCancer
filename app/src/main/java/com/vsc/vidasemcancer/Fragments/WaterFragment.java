@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -168,12 +167,12 @@ public class WaterFragment extends Fragment {
         int cont = 0;
         while (it.hasNext()) {
             Water water = it.next();
-            vals.add(new Entry(water.getCurrentLevel(), 0));
-            vals2.add(String.valueOf(water.getDate()));
+            vals.add(new Entry(water.getCurrentLevel(), cont));
+            vals2.add(water.getDate());
             cont++;
         }
-        LineDataSet setComp1 = new LineDataSet(vals, "lol");
-        setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
+        LineDataSet setComp1 = new LineDataSet(vals, getString(R.string.graph_label));
+        //setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(setComp1);
         //LineData data = new LineData(vals, dataSets);
