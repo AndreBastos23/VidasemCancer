@@ -34,11 +34,16 @@ import java.util.Calendar;
  */
 public class BaseActivity extends AppCompatActivity implements OnRecipeSelected {
 
+    public final int WATER_NOTIFICATION = 0;
+    public final int BREATHE_NOTIFICATION = 1;
+    public final int BREAKFAST_NOTIFICATION = 2;
+    public final int LUNCH_NOTIFICATION = 3;
+    public final int DINNER_NOTIFICATION = 4;
+    public final int SUN_NOTIFICATION = 5;
     private DrawerLayout mDrawer;
-    private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
-    private PendingIntent pendingIntent;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +62,7 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
 
     private void handleFirstRun() {
 
-        //handle first creation of notifications
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        Boolean waterWarning = preferences.getBoolean(getString(R.string.water_warning_key), true);
-        rememberWater(waterWarning);
-
+        handleNotifications();
         //open settings fragment
         Fragment fragment = null;
         Class fragmentClass = SettingsFragment.class;
@@ -75,6 +76,88 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
 
         //show first time dialog
         showDialog();
+    }
+
+    private void handleNotifications() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        rememberWater(preferences);
+        rememberBreathe(preferences);
+        rememberFood(preferences);
+        rememberSun(preferences);
+
+    }
+
+    public void rememberSun(SharedPreferences preferences) {
+        Calendar calendar = Calendar.getInstance();
+        Intent myIntent = new Intent(BaseActivity.this, NotifyService.class);
+        myIntent.setAction(getString(R.string.sun_notification));
+        PendingIntent sunIntent = PendingIntent.getBroadcast(BaseActivity.this, SUN_NOTIFICATION, myIntent, 0);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        Boolean sunWarning = preferences.getBoolean(getString(R.string.sun_warning_key), true);
+        String time = preferences.getString(getString(R.string.sun_time_key), "23:38");
+        String[] params = time.split(":");
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.valueOf(params[0]));
+        calendar.set(Calendar.MINUTE, Integer.valueOf(params[1]));
+        if (sunWarning) {
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 24 * 3600 * 1000, sunIntent);
+        } else {
+            alarmManager.cancel(sunIntent);
+        }
+
+    }
+
+    public void rememberFood(SharedPreferences preferences) {
+        Calendar calendar = Calendar.getInstance();
+
+        Intent bfIntent = new Intent(BaseActivity.this, NotifyService.class);
+        bfIntent.setAction(getString(R.string.eat_breakfast_notification));
+        Intent lIntent = new Intent(BaseActivity.this, NotifyService.class);
+        lIntent.setAction(getString(R.string.eat_lunch_notification));
+        Intent dIntentt = new Intent(BaseActivity.this, NotifyService.class);
+        dIntentt.setAction(getString(R.string.eat_dinner_notification));
+
+        PendingIntent breakFastIntent = PendingIntent.getBroadcast(BaseActivity.this, BREAKFAST_NOTIFICATION, bfIntent, 0);
+        PendingIntent lunchIntent = PendingIntent.getBroadcast(BaseActivity.this, LUNCH_NOTIFICATION, lIntent, 0);
+        PendingIntent dinnerIntent = PendingIntent.getBroadcast(BaseActivity.this, DINNER_NOTIFICATION, dIntentt, 0);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        Boolean foodWarning = preferences.getBoolean(getString(R.string.eat_warning_key), true);
+
+        if (foodWarning) {
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 24 * 3600 * 1000, breakFastIntent);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 24 * 3600 * 1000, lunchIntent);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 24 * 3600 * 1000, dinnerIntent);
+        } else {
+            alarmManager.cancel(breakFastIntent);
+            alarmManager.cancel(lunchIntent);
+            alarmManager.cancel(dinnerIntent);
+        }
+
+    }
+
+    public void rememberBreathe(SharedPreferences preferences) {
+        Calendar calendar = Calendar.getInstance();
+
+        Intent myIntent = new Intent(BaseActivity.this, NotifyService.class);
+        myIntent.setAction(getString(R.string.breathe_notification));
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(BaseActivity.this, BREATHE_NOTIFICATION, myIntent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        Boolean breatheWarning = preferences.getBoolean(getString(R.string.breathe_warning_key), true);
+        String time = preferences.getString(getString(R.string.breathe_time_key), "23:38");
+        String[] params = time.split(":");
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.valueOf(params[0]));
+        calendar.set(Calendar.MINUTE, Integer.valueOf(params[1]));
+        if (breatheWarning) {
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 24 * 3600 * 1000, pendingIntent);
+        } else {
+            alarmManager.cancel(pendingIntent);
+        }
+
     }
 
     private void setupToolbar() {
@@ -91,16 +174,21 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
     /**
      * Remember water.
      *
-     * @param config the config
+     * @param preferences the preferences
      */
-    public void rememberWater(Boolean config) {
+    public void rememberWater(SharedPreferences preferences) {
         Calendar calendar = Calendar.getInstance();
 
         Intent myIntent = new Intent(BaseActivity.this, NotifyService.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(BaseActivity.this, 0, myIntent, 0);
+        myIntent.setAction(getString(R.string.water_notification));
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(BaseActivity.this, WATER_NOTIFICATION, myIntent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        if (config) {
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 30 * 1000, pendingIntent);
+
+        Boolean waterWarning = preferences.getBoolean(getString(R.string.water_warning_key), true);
+        String interval = preferences.getString(getString(R.string.water_warning_interval_key), getString(R.string.water_interval_default));
+
+        if (waterWarning) {
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), Integer.parseInt(interval) * 3600 * 1000, pendingIntent);
         } else {
             alarmManager.cancel(pendingIntent);
         }

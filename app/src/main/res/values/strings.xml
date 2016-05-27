@@ -52,5 +52,15 @@
     <string name="breathe_category_key">breathe_settings</string>
     <string name="breathe_warning_key">breathe_warning</string>
     <string name="breathe_warning_time_title">Hora do aviso</string>
+    <string name="eat.warning.key">eat_warning</string>
+    <string name="sun.warning.key">sun_warning</string>
+    <string name="water_notification">water.notification</string>
+    <string name="breathe_notification">breathe.notification</string>
+    <string name="eat_breakfast_notification">eat.breakfast.notification</string>
+    <string name="eat_lunch_notification">eat.lunch.notification</string>
+    <string name="eat_dinner_notification">eat.dinner.notification</string>
+    <string name="sun_notification">sun.notification</string>
+    <string name="sun.time.key">sun.time.key</string>
+    <string name="breathe.time.key">breathe.time.key</string>
 
 </resources>
