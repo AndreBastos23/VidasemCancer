@@ -72,7 +72,7 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
             e.printStackTrace();
         }
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.flContent, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
     }
 
     private void handleFirstRun() {
