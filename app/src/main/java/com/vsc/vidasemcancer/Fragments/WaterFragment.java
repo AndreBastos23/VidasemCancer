@@ -13,12 +13,20 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.vsc.vidasemcancer.Models.Water;
 import com.vsc.vidasemcancer.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -37,6 +45,7 @@ public class WaterFragment extends Fragment {
 
     private ImageButton upArrow;
     private ImageButton downArrow;
+    private LineChart lineChart;
 
     public WaterFragment() {
 
@@ -54,7 +63,7 @@ public class WaterFragment extends Fragment {
         // Open the Realm for the UI thread.
         realm = Realm.getInstance(realmConfig);
 
-        String today = getTodayInString();
+        String today = getTodayInString(0);
 
         RealmResults<Water> results = realm.where(Water.class).equalTo("date", today).findAll();
         if (results.isEmpty()) {
@@ -69,10 +78,13 @@ public class WaterFragment extends Fragment {
             waterObject = results.first();
         }
 
+        lineChart = (LineChart) getActivity().findViewById(R.id.chart);
+
     }
 
-    private String getTodayInString() {
+    private String getTodayInString(int nDays) {
         Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_MONTH, nDays);
         DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
         return formatter.format(cal.getTime());
@@ -92,14 +104,84 @@ public class WaterFragment extends Fragment {
         ImageView imageView = (ImageView) rootView.findViewById(R.id.water_up_arrow);
         ImageView imageView1 = (ImageView) rootView.findViewById(R.id.water_down_arrow);
         TextView textView = (TextView) rootView.findViewById(R.id.water_text_view);
-
+        lineChart = (LineChart) rootView.findViewById(R.id.chart);
+        lineChart.setVisibleXRange(1, 3);
         imageView.setImageResource(R.drawable.ic_keyboard_arrow_up_black_24dp);
         imageView1.setImageResource(R.drawable.ic_keyboard_arrow_down_black_24dp);
         imageView2.setImageResource(setImage());
         textView.setText(String.valueOf(waterObject.getCurrentLevel()));
 
+
         addButtonListener(rootView);
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume(); // setup realm
+        String today = getTodayInString(0);
+
+        RealmResults<Water> results = realm.where(Water.class).equalTo("date", today).findAll();
+        if (results.isEmpty()) {
+            realm.beginTransaction();
+            waterObject = realm.createObject(Water.class);
+            waterObject.setCurrentLevel(0);
+            waterObject.setObjective(2000);
+
+            waterObject.setDate(today);
+            realm.commitTransaction();
+        } else {
+            waterObject = results.first();
+        }
+
+
+        // add data to the chart
+        lastWeekData();
+    }
+
+    private void lastWeekData() {
+
+
+        RealmResults<Water> results = realm.where(Water.class).contains("date", getTodayInString(-7).substring(2, 10)).findAll();
+
+        /*RealmLineDataSet<Water> waterRealmLineDataSet = new RealmLineDataSet(results, "currentLevel", "objective");
+
+        waterRealmLineDataSet.setDrawCubic(false);
+        waterRealmLineDataSet.setLabel("Realm LineDataSet");
+        waterRealmLineDataSet.setDrawCircleHole(false);
+        waterRealmLineDataSet.setColor(ColorTemplate.rgb("#FF5722"));
+        waterRealmLineDataSet.setCircleColor(ColorTemplate.rgb("#FF5722"));
+        waterRealmLineDataSet.setLineWidth(1.8f);
+        waterRealmLineDataSet.setCircleSize(3.6f);
+
+        ArrayList<ILineDataSet> dataSetList = new ArrayList<ILineDataSet>();
+        dataSetList.add(waterRealmLineDataSet); // add the dataset
+        RealmLineData data = new RealmLineData(results, "date", dataSetList);
+        lineChart.setData(data);
+
+        RealmLineDataSet<Water> waterRealmLineDataSet = new RealmLineDataSet(results, "currentLevel");*/
+
+
+        ArrayList<Entry> vals = new ArrayList<Entry>();
+        ArrayList<String> vals2 = new ArrayList<String>();
+        Iterator<Water> it = results.iterator();
+        int cont = 0;
+        while (it.hasNext()) {
+            Water water = it.next();
+            vals.add(new Entry(water.getCurrentLevel(), 0));
+            vals2.add(String.valueOf(water.getDate()));
+            cont++;
+        }
+        LineDataSet setComp1 = new LineDataSet(vals, "lol");
+        setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(setComp1);
+        //LineData data = new LineData(vals, dataSets);
+        LineData data = new LineData(vals2, dataSets);
+        lineChart.setData(data);
+        lineChart.invalidate(); // refresh
+
+
     }
 
     public void addButtonListener(View view) {
@@ -151,6 +233,8 @@ public class WaterFragment extends Fragment {
         }
 
         if (objective >= 100) {
+            return R.drawable.water_over100;
+        } else if (objective >= 90) {
             return R.drawable.water_100;
         } else if (objective >= 80) {
             return R.drawable.water_80;

@@ -8,11 +8,14 @@ public class Water extends RealmObject {
 
     @PrimaryKey
     private String date;
-
     private int objective;
     private int currentLevel;
     @Ignore
     private int sessionId;
+
+    public Water() {
+
+    }
 
     public int getObjective() {
         return objective;
