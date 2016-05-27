@@ -3,6 +3,7 @@ package com.vsc.vidasemcancer.Fragments;
 
 import android.app.Fragment;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -15,10 +16,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LimitLine;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.vsc.vidasemcancer.Formatters.LiterAxisFormatter;
 import com.vsc.vidasemcancer.Models.Water;
 import com.vsc.vidasemcancer.R;
 
@@ -158,16 +163,42 @@ public class WaterFragment extends Fragment {
         ArrayList<String> vals2 = new ArrayList<String>();
         Iterator<Water> it = results.iterator();
         int cont = 0;
+
         while (it.hasNext()) {
             Water water = it.next();
             vals.add(new Entry(((float) water.getCurrentLevel()) / 1000, cont));
-            vals2.add(cont + "");
+            vals2.add(water.getDate().substring(0, 5));
+
             cont++;
         }
         LineDataSet setComp1 = new LineDataSet(vals, getString(R.string.graph_label));
         setComp1.setDrawFilled(true);
         setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
         LineData data = new LineData(vals2, setComp1);
+        data.setValueFormatter(new LiterAxisFormatter());
+
+        Legend legend = lineChart.getLegend();
+        legend.setPosition(Legend.LegendPosition.BELOW_CHART_RIGHT);
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        YAxis yAxis = lineChart.getAxisRight();
+        yAxis.setEnabled(false);
+        YAxis yAxisLeft = lineChart.getAxisLeft();
+        yAxisLeft.setDrawGridLines(false);
+        yAxisLeft.setDrawAxisLine(false);
+        yAxisLeft.setDrawLabels(false);
+        yAxisLeft.setAxisMinValue(0);
+
+        yAxisLeft.removeAllLimitLines();
+
+        LimitLine limitLine = new LimitLine((float) waterObject.getObjective() / 1000);
+        limitLine.setLineColor(Color.GREEN);
+        limitLine.setLineWidth(2f);
+        yAxisLeft.addLimitLine(limitLine);
+        yAxisLeft.setDrawLimitLinesBehindData(true);
+
+        lineChart.setDescription("");
         lineChart.setData(data);
         lineChart.invalidate(); // refresh
 
