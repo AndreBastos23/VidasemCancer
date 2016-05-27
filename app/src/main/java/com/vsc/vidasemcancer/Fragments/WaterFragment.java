@@ -2,7 +2,9 @@ package com.vsc.vidasemcancer.Fragments;
 
 
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +55,6 @@ public class WaterFragment extends Fragment {
         realm = Realm.getInstance(realmConfig);
 
         String today = getTodayInString();
-
 
         RealmResults<Water> results = realm.where(Water.class).equalTo("date", today).findAll();
         if (results.isEmpty()) {
@@ -126,13 +127,18 @@ public class WaterFragment extends Fragment {
     }
 
     public void waterTransaction(int id) {
-
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        Integer amount = Integer.parseInt(preferences.getString(getString(R.string.water_warning_qtty_key), "300"));
         realm.beginTransaction();
         if (id == R.id.water_down_arrow) {
-            int waterLevel = waterObject.getCurrentLevel() - 200;
-            waterObject.setCurrentLevel(waterLevel);
+            int waterLevel = waterObject.getCurrentLevel() - amount;
+            if (waterLevel > 0) {
+                waterObject.setCurrentLevel(waterLevel);
+            } else {
+                waterObject.setCurrentLevel(0);
+            }
         } else if (id == R.id.water_up_arrow) {
-            int waterLevel = waterObject.getCurrentLevel() + 200;
+            int waterLevel = waterObject.getCurrentLevel() + amount;
             waterObject.setCurrentLevel(waterLevel);
         }
         realm.commitTransaction();

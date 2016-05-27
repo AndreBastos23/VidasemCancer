@@ -56,9 +56,23 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
         if (isFirstTime()) {
 
             handleFirstRun();
+        } else {
+            handleInitialFragment();
         }
 
 
+    }
+
+    private void handleInitialFragment() {
+        Fragment fragment = null;
+        Class fragmentClass = WaterFragment.class;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.flContent, fragment).commit();
     }
 
     private void handleFirstRun() {

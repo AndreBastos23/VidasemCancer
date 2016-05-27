@@ -1,40 +1,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:minHeight="?android:attr/listPreferredItemHeight"
     android:orientation="vertical"
-    android:weightSum="1"
-    tools:context="com.vsc.vidasemcancer.Fragments.WaterFragment">
+    android:padding="16dp">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="474dp"
-        android:layout_marginBottom="0dp"
-        android:paddingBottom="0dp">
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:minHeight="@dimen/abc_action_bar_stacked_tab_max_width"
+        android:orientation="horizontal"
+        android:padding="16dp">
 
         <ImageView
             android:id="@+id/water_image"
-            android:layout_width="200dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="16dp"
             android:scaleType="fitCenter" />
-
         <LinearLayout
             android:layout_width="wrap_content"
+
             android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="200dp"
-            android:layout_toEndOf="@+id/water_image"
-            android:layout_toRightOf="@+id/water_image"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <ImageButton
                 android:id="@+id/water_up_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+
                 android:clickable="true" />
 
 
@@ -42,17 +41,21 @@
                 android:id="@+id/water_down_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:clickable="true" />
 
         </LinearLayout>
-    </RelativeLayout>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/water_text_view"
         style="@style/Base.TextAppearance.AppCompat.SearchResult.Title"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_weight="0"
         android:gravity="center_vertical|center_horizontal" />
 
 </LinearLayout>
+
