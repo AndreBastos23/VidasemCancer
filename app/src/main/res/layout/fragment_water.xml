@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    tools:context="com.vsc.vidasemcancer.Fragments.WaterFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="474dp"
+        android:layout_marginBottom="0dp"
+        android:paddingBottom="0dp">
+
+
+        <ImageView
+            android:id="@+id/water_image"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:scaleType="fitCenter" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="200dp"
+            android:layout_toEndOf="@+id/water_image"
+            android:layout_toRightOf="@+id/water_image"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/water_up_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true" />
+
+
+            <ImageButton
+                android:id="@+id/water_down_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/water_text_view"
+        style="@style/Base.TextAppearance.AppCompat.SearchResult.Title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center_vertical|center_horizontal" />
+
+</LinearLayout>

@@ -53,4 +53,8 @@
     <string name="breathe_warning_key">breathe_warning</string>
     <string name="breathe_warning_time_title">Hora do aviso</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_water">Água</string>
+
 </resources>
