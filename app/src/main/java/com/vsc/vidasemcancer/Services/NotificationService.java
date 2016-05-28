@@ -15,7 +15,16 @@ import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import com.vsc.vidasemcancer.Activities.BaseActivity;
+import com.vsc.vidasemcancer.Models.Water;
 import com.vsc.vidasemcancer.R;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 
 /**
  * Created by Eduardo on 25/05/2016.
@@ -44,6 +53,9 @@ public class NotificationService extends IntentService {
         int notificationId = 100;
 
         if (intent.getAction().equals(getString(R.string.water_notification))) {
+            if (isObjectiveCompleted()) {
+                return;
+            }
             notificationId = WATER_NOTIFICATION;
             getWaterNotification();
         } else if (intent.getAction().equals(getString(R.string.sun_notification))) {
@@ -62,9 +74,28 @@ public class NotificationService extends IntentService {
             notificationId = DINNER_NOTIFICATION;
             getFoodNotification(notificationId);
         }
+
         notificationManager.notify(notificationId, notification);
         Log.i("notif", "Notifications sent.");
 
+    }
+
+    private boolean isObjectiveCompleted() {
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder(getBaseContext()).build();
+        Realm realm = Realm.getInstance(realmConfig);
+        Calendar cal = Calendar.getInstance();
+
+        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+
+        String str = formatter.format(cal.getTime());
+        RealmResults<Water> results = realm.where(Water.class).equalTo("date", str).findAll();
+
+        if (results.isEmpty()) {
+            return false;
+        } else {
+            Water waterObject = results.first();
+            return waterObject.getCurrentLevel() >= waterObject.getObjective();
+        }
     }
 
     private void getWaterNotification() {
