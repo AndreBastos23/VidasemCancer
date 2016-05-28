@@ -40,7 +40,7 @@
             android:key="@string/breathe_warning_key"
             android:title="@string/breathe_warning_setting" />
         <com.vsc.vidasemcancer.Preferences.TimePreference
-            android:defaultValue="23:38"
+            android:defaultValue="16:00"
             android:dependency="@string/breathe_warning_key"
             android:key="@string/breathe.time.key"
             android:title="@string/breathe_warning_time_title" />
@@ -68,7 +68,7 @@
             android:key="sun_warning"
             android:title="@string/sun_warning_settings" />
         <com.vsc.vidasemcancer.Preferences.TimePreference
-            android:defaultValue="23:38"
+            android:defaultValue="16:00"
             android:dependency="@string/sun.warning.key"
             android:key="@string/sun.time.key"
             android:title="Hora do aviso" />
