@@ -109,8 +109,8 @@ public class NotificationService extends IntentService {
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         notification = new NotificationCompat.Builder(this)
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.imagemfinal)
-                .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.imagemfinal))
+                .setSmallIcon(R.drawable.ic_stat_rsz_vidasemcancer)
+                .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_stat_image_wb_sunny))
                 .setTicker("ticker value")
                 .setAutoCancel(true)
                 .setPriority(8)
@@ -138,8 +138,8 @@ public class NotificationService extends IntentService {
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         notification = new NotificationCompat.Builder(this)
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.imagemfinal)
-                .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.imagemfinal))
+                .setSmallIcon(R.drawable.ic_stat_rsz_vidasemcancer)
+                .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_stat_action_favorite_outline))
                 .setTicker("ticker value")
                 .setAutoCancel(true)
                 .setPriority(8)
@@ -167,8 +167,8 @@ public class NotificationService extends IntentService {
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         notification = new NotificationCompat.Builder(this)
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.imagemfinal)
-                .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.imagemfinal))
+                .setSmallIcon(R.drawable.ic_stat_rsz_vidasemcancer)
+                .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_stat_maps_local_restaurant))
                 .setTicker("ticker value")
                 .setAutoCancel(true)
                 .setPriority(8)
