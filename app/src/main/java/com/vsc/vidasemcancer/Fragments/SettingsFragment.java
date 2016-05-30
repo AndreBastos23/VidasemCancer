@@ -37,9 +37,9 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             baseActivity.rememberBreathe(sharedPreferences);
         } else if (key.equals(getString(R.string.eat_warning_key))) {
             baseActivity.rememberFood(sharedPreferences);
-        } else if (key.equals(getString(R.string.sports_warning_key))) {
+        } else if (key.equals(getString(R.string.sports_warning_key)) || key.equals(getString(R.string.sports_time_key))) {
             baseActivity.rememberSports(sharedPreferences);
-        } else if (key.equals(getString(R.string.meditation_warning_key))) {
+        } else if (key.equals(getString(R.string.meditation_warning_key)) || key.equals(getString(R.string.meditation_time_key))) {
             baseActivity.rememberMeditation(sharedPreferences);
         }
     }
