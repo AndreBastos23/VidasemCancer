@@ -46,7 +46,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="eat_settngs"
+        android:key="@string/eat_settings"
         android:title="@string/eat_settings">
         <CheckBoxPreference
             android:layout_width="match_parent"
@@ -70,8 +70,39 @@
             android:defaultValue="16:00"
             android:dependency="@string/sun.warning.key"
             android:key="@string/sun.time.key"
-            android:title="Hora do aviso" />
+            android:title="@string/warning_hour" />
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:key="meditation_settings"
+        android:title="@string/meditation.warning.title">
+        <CheckBoxPreference
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:defaultValue="true"
+            android:key="@string/meditation.warning.key"
+            android:title="@string/meditation.warning.title" />
 
+        <com.vsc.vidasemcancer.Preferences.TimePreference
+            android:defaultValue="16:00"
+            android:dependency="@string/meditation.warning.key"
+            android:key="@string/meditation.time.key"
+            android:title="@string/warning_hour" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="sports_settings"
+        android:title="@string/sports.warning.title">
+        <CheckBoxPreference
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:defaultValue="true"
+            android:key="@string/sports.warning.key"
+            android:title="@string/sports.warning.title" />
+
+        <com.vsc.vidasemcancer.Preferences.TimePreference
+            android:defaultValue="16:00"
+            android:dependency="@string/sports.warning.key"
+            android:key="@string/sports.time.key"
+            android:title="@string/warning_hour" />
+    </PreferenceCategory>
 </PreferenceScreen>

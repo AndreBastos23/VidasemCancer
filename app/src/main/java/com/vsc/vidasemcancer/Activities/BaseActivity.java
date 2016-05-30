@@ -41,6 +41,8 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
     public final int LUNCH_NOTIFICATION = 3;
     public final int DINNER_NOTIFICATION = 4;
     public final int SUN_NOTIFICATION = 5;
+    public final int MEDITATION_NOTIFICATION = 6;
+    public final int SPORTS_NOTIFICATION = 7;
     private DrawerLayout mDrawer;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
@@ -176,6 +178,30 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
 
     }
 
+
+    public void rememberSports(SharedPreferences sharedPreferences) {
+        Calendar calendar = Calendar.getInstance();
+        Intent myIntent = new Intent(BaseActivity.this, NotifyService.class);
+        myIntent.setAction(getString(R.string.sports_notification));
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(BaseActivity.this, SPORTS_NOTIFICATION, myIntent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        Boolean sportsWarning = sharedPreferences.getBoolean(getString(R.string.sports_warning_key), true);
+        String time = sharedPreferences.getString(getString(R.string.sports_time_key), "16:00");
+        String[] params = time.split(":");
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.valueOf(params[0]));
+        calendar.set(Calendar.MINUTE, Integer.valueOf(params[1]));
+        if (calendar.before(Calendar.getInstance())) {
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        if (sportsWarning) {
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        } else {
+            alarmManager.cancel(pendingIntent);
+        }
+
+    }
+
     public void rememberBreathe(SharedPreferences preferences) {
         Calendar calendar = Calendar.getInstance();
 
@@ -210,6 +236,7 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         setupDrawerContent(nvDrawer);
     }
+
 
     /**
      * Remember water.
@@ -339,5 +366,29 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
     void showDialog() {
         DialogFragment newFragment = SettingsDialogFragment.newInstance(R.string.alert_dialog_title, R.string.alert_dialog_message);
         newFragment.show(getSupportFragmentManager(), "dialog");
+    }
+
+    public void rememberMeditation(SharedPreferences sharedPreferences) {
+
+        Calendar calendar = Calendar.getInstance();
+        Intent myIntent = new Intent(BaseActivity.this, NotifyService.class);
+        myIntent.setAction(getString(R.string.meditation_notification));
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(BaseActivity.this, MEDITATION_NOTIFICATION, myIntent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        Boolean meditationWarning = sharedPreferences.getBoolean(getString(R.string.meditation_warning_key), true);
+        String time = sharedPreferences.getString(getString(R.string.meditation_time_key), "16:00");
+        String[] params = time.split(":");
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.valueOf(params[0]));
+        calendar.set(Calendar.MINUTE, Integer.valueOf(params[1]));
+        if (calendar.before(Calendar.getInstance())) {
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        if (meditationWarning) {
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        } else {
+            alarmManager.cancel(pendingIntent);
+        }
+
     }
 }

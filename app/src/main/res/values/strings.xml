@@ -56,18 +56,30 @@
     <string name="sun.warning.key">sun_warning</string>
     <string name="water_notification">water.notification</string>
     <string name="breathe_notification">breathe.notification</string>
+    <string name="sports.notification">sports.notification</string>
+    <string name="meditation.notification">meditation.notification</string>
     <string name="eat_breakfast_notification">eat.breakfast.notification</string>
     <string name="eat_lunch_notification">eat.lunch.notification</string>
     <string name="eat_dinner_notification">eat.dinner.notification</string>
     <string name="sun_notification">sun.notification</string>
     <string name="sun.time.key">sun.time.key</string>
     <string name="breathe.time.key">breathe.time.key</string>
-
+    <string name="meditation.settings">meditation.settings</string>
+    <string name="meditation.warning">meditation.warning</string>
+    <string name="meditation.warning.title">Aviso para meditar</string>
+    <string name="sports.settings">sports.settings</string>
+    <string name="sports.warning">sports.warning</string>
+    <string name="sports.warning.title">Aviso para praticar desporto</string>
+    <string name="warning_hour">Hora do aviso</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menu_water">Água</string>
     <string name="graph.label">Quantidade de água em Litros</string>
     <string name="water_value_textview">Hoje bebeu:</string>
     <string name="water_unit">Litros</string>
+    <string name="meditation.time.key">meditation.settings.key</string>
+    <string name="sports.time.key">sports.time.key</string>
+    <string name="sports.warning.key">sports.warning.key</string>
+    <string name="meditation.warning.key">meditation.warning.key</string>
 
 </resources>
