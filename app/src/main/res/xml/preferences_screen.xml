@@ -21,7 +21,6 @@
 
         <ListPreference
             android:defaultValue="@string/water.qtty_default"
-            android:dependency="@string/water.warning.key"
             android:entries="@array/water_qtty_entries"
             android:entryValues="@array/water_qtty_entryvalues"
             android:key="@string/water.warning.qtty_key"

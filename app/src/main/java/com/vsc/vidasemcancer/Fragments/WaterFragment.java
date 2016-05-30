@@ -158,7 +158,6 @@ public class WaterFragment extends Fragment {
         RealmResults<Water> results = realm.where(Water.class).contains("date", getTodayInString(-7).substring(2, 10)).findAll();
 
 
-
         ArrayList<Entry> vals = new ArrayList<Entry>();
         ArrayList<String> vals2 = new ArrayList<String>();
         Iterator<Water> it = results.iterator();
@@ -212,6 +211,7 @@ public class WaterFragment extends Fragment {
         final TextView textView = (TextView) view.findViewById(R.id.water_text_view);
         upArrow = (ImageButton) view.findViewById(R.id.water_up_arrow);
         upArrow.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 waterTransaction(R.id.water_up_arrow);
