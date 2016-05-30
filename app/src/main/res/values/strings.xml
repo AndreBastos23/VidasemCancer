@@ -49,7 +49,7 @@
     <string name="water.warning.interval_key">water.warning.interval</string>
     <string name="water.warning.qtty_key">water.warning.qtty</string>
     <string name="water_category_key">water_settings</string>
-    <string name="breathe_category_key">breathe_settings</string>
+    <string name="breathe.category.key">breathe_settings</string>
     <string name="breathe_warning_key">breathe_warning</string>
     <string name="breathe_warning_time_title">Hora do aviso</string>
     <string name="eat.warning.key">eat_warning</string>
@@ -69,5 +69,8 @@
     <string name="graph.label">Quantidade de água em Litros</string>
     <string name="water_value_textview">Hoje bebeu:</string>
     <string name="water_unit">Litros</string>
+    <string name="breathe.category.interval_key">breathe.category.interval_key</string>
+    <string name="breathe.warning.interval_summary">Tempo entre avisos para a respiração</string>
+    <string name="breathe.warning.interval">Intervalo do aviso</string>
 
 </resources>
