@@ -49,9 +49,10 @@
     <string name="water.warning.interval_key">water.warning.interval</string>
     <string name="water.warning.qtty_key">water.warning.qtty</string>
     <string name="water_category_key">water_settings</string>
-    <string name="breathe_category_key">breathe_settings</string>
+    <string name="breathe.category.key">breathe_settings</string>
     <string name="breathe_warning_key">breathe_warning</string>
     <string name="breathe_warning_time_title">Hora do aviso</string>
+    <string name="breathe.interval.default">1</string>
     <string name="eat.warning.key">eat_warning</string>
     <string name="sun.warning.key">sun_warning</string>
     <string name="water_notification">water.notification</string>
@@ -81,5 +82,8 @@
     <string name="sports.time.key">sports.time.key</string>
     <string name="sports.warning.key">sports.warning.key</string>
     <string name="meditation.warning.key">meditation.warning.key</string>
+    <string name="breathe.category.interval_key">breathe.category.interval_key</string>
+    <string name="breathe.warning.interval_summary">Tempo entre avisos para a respiração</string>
+    <string name="breathe.warning.interval">Intervalo do aviso</string>
 
 </resources>

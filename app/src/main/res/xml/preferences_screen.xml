@@ -30,7 +30,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="@string/breathe_category_key"
+        android:key="@string/breathe.category.key"
         android:title="@string/breathe_settings">
         <CheckBoxPreference
             android:layout_width="match_parent"
@@ -38,11 +38,14 @@
             android:defaultValue="true"
             android:key="@string/breathe_warning_key"
             android:title="@string/breathe_warning_setting" />
-        <com.vsc.vidasemcancer.Preferences.TimePreference
-            android:defaultValue="16:00"
-            android:dependency="@string/breathe_warning_key"
-            android:key="@string/breathe.time.key"
-            android:title="@string/breathe_warning_time_title" />
+        <ListPreference
+            android:defaultValue="@string/breathe.interval.default"
+            android:dependency="@string/breathe.category.key"
+            android:entries="@array/breathe.interval.entries"
+            android:entryValues="@array/breathe.interval.entryvalues"
+            android:key="@string/breathe.category.interval_key"
+            android:summary="@string/breathe.warning.interval_summary"
+            android:title="@string/breathe.warning.interval" />
     </PreferenceCategory>
 
     <PreferenceCategory
