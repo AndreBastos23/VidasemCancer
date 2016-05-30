@@ -12,6 +12,18 @@
         <item>3</item>
     </string-array>
 
+    <string-array name="breathe.interval.entries">
+        <item>1 Hora</item>
+        <item>2 Horas</item>
+        <item>3 Horas</item>
+    </string-array>
+
+    <string-array name="breathe.interval.entryvalues">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
     <string-array name="water_qtty_entries">
         <item>0.1 L</item>
         <item>0.2 L</item>
