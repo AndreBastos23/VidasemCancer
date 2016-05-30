@@ -3,7 +3,6 @@ package com.vsc.vidasemcancer.Fragments;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
 
 import com.vsc.vidasemcancer.Managers.NotificationMng;
 import com.vsc.vidasemcancer.R;
@@ -22,8 +21,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        PreferenceManager manager = getPreferenceManager();
-        manager.setSharedPreferencesName("PREFS");
+
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.preferences_screen);
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
