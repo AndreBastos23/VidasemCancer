@@ -12,13 +12,13 @@
         <item>3</item>
     </string-array>
 
-    <string-array name="breathe.interval.entries">
+    <string-array name="breathe_interval_entries">
         <item>1 Hora</item>
         <item>2 Horas</item>
         <item>3 Horas</item>
     </string-array>
 
-    <string-array name="breathe.interval.entryvalues">
+    <string-array name="breathe_interval_entryvalues">
         <item>1</item>
         <item>2</item>
         <item>3</item>
