@@ -26,9 +26,6 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
-/**
- * Created by Eduardo on 25/05/2016.
- */
 public class NotificationService extends IntentService {
 
     public final int WATER_NOTIFICATION = 0;
@@ -37,11 +34,11 @@ public class NotificationService extends IntentService {
     public final int LUNCH_NOTIFICATION = 3;
     public final int DINNER_NOTIFICATION = 4;
     public final int SUN_NOTIFICATION = 5;
+    public final int MEDITATION_NOTIFICATION = 6;
+    public final int SPORTS_NOTIFICATION = 7;
     Notification notification;
     private NotificationManager notificationManager;
     private PendingIntent pendingIntent;
-    private Object sunNotification;
-    private Object breatheNotification;
 
 
     public NotificationService() {
@@ -73,6 +70,12 @@ public class NotificationService extends IntentService {
         } else if (intent.getAction().equals(getString(R.string.eat_dinner_notification))) {
             notificationId = DINNER_NOTIFICATION;
             getFoodNotification(notificationId);
+        } else if (intent.getAction().equals(getString(R.string.sports_notification))) {
+            notificationId = SPORTS_NOTIFICATION;
+            getSportsNotification();
+        } else if (intent.getAction().equals(getString(R.string.meditation_notification))) {
+            notificationId = MEDITATION_NOTIFICATION;
+            getMeditationNotification();
         }
 
         notificationManager.notify(notificationId, notification);
@@ -206,6 +209,64 @@ public class NotificationService extends IntentService {
                 .setSound(soundUri)
                 .setContentTitle("Lembrete")
                 .setContentText("Já Comeu?").build();
+        notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
+        notification.defaults |= Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE;
+        notification.ledARGB = 0xFFFFA500;
+        notification.ledOnMS = 800;
+        notification.ledOffMS = 1000;
+        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+    }
+
+    public void getSportsNotification() {
+        Context context = this.getApplicationContext();
+        notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        Intent mIntent = new Intent(this, BaseActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("text", "Já praticou exercicio hoje?");
+        mIntent.putExtras(bundle);
+        pendingIntent = PendingIntent.getActivity(context, 0, mIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Resources res = this.getResources();
+        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        notification = new NotificationCompat.Builder(this)
+                .setContentIntent(pendingIntent)
+                .setSmallIcon(R.drawable.ic_stat_rsz_vidasemcancer)
+                .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_stat_action_favorite_outline))
+                .setTicker("ticker value")
+                .setAutoCancel(true)
+                .setPriority(8)
+                .setSound(soundUri)
+                .setContentTitle("Lembrete")
+                .setContentText("Já praticou exercicio hoje?").build();
+        notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
+        notification.defaults |= Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE;
+        notification.ledARGB = 0xFFFFA500;
+        notification.ledOnMS = 800;
+        notification.ledOffMS = 1000;
+        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+    }
+
+    public void getMeditationNotification() {
+        Context context = this.getApplicationContext();
+        notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        Intent mIntent = new Intent(this, BaseActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("text", "Já meditou hoje?");
+        mIntent.putExtras(bundle);
+        pendingIntent = PendingIntent.getActivity(context, 0, mIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Resources res = this.getResources();
+        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        notification = new NotificationCompat.Builder(this)
+                .setContentIntent(pendingIntent)
+                .setSmallIcon(R.drawable.ic_stat_rsz_vidasemcancer)
+                .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_stat_action_favorite_outline))
+                .setTicker("ticker value")
+                .setAutoCancel(true)
+                .setPriority(8)
+                .setSound(soundUri)
+                .setContentTitle("Lembrete")
+                .setContentText("Já meditou hoje?").build();
         notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
         notification.defaults |= Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE;
         notification.ledARGB = 0xFFFFA500;

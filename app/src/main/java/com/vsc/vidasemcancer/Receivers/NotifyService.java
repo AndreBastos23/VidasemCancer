@@ -6,9 +6,6 @@ import android.content.Intent;
 
 import com.vsc.vidasemcancer.Services.NotificationService;
 
-/**
- * Created by Eduardo on 22/05/2016.
- */
 public class NotifyService extends BroadcastReceiver {
 
     @Override
