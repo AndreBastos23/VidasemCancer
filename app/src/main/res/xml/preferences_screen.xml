@@ -39,10 +39,10 @@
             android:key="@string/breathe_warning_key"
             android:title="@string/breathe_warning_setting" />
         <ListPreference
-            android:defaultValue="@string/water_interval_default"
+            android:defaultValue="@string/breathe.interval.default"
             android:dependency="@string/breathe.category.key"
-            android:entries="@array/water_interval_entries"
-            android:entryValues="@array/water_interval_entryvalues"
+            android:entries="@array/breathe.interval.entries"
+            android:entryValues="@array/breathe.interval.entryvalues"
             android:key="@string/breathe.category.interval_key"
             android:summary="@string/breathe.warning.interval_summary"
             android:title="@string/breathe.warning.interval" />

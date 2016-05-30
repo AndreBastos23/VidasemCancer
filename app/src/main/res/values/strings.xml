@@ -52,6 +52,7 @@
     <string name="breathe.category.key">breathe_settings</string>
     <string name="breathe_warning_key">breathe_warning</string>
     <string name="breathe_warning_time_title">Hora do aviso</string>
+    <string name="breathe.interval.default">1</string>
     <string name="eat.warning.key">eat_warning</string>
     <string name="sun.warning.key">sun_warning</string>
     <string name="water_notification">water.notification</string>

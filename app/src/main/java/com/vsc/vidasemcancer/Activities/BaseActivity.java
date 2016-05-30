@@ -185,7 +185,7 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         Boolean breatheWarning = preferences.getBoolean(getString(R.string.breathe_warning_key), true);
-        String interval = preferences.getString(getString(R.string.breathe_category_interval_key), getString(R.string.water_interval_default));
+        String interval = preferences.getString(getString(R.string.breathe_category_interval_key), getString(R.string.breathe_interval_default));
         calendar.add(Calendar.HOUR_OF_DAY, Integer.parseInt(interval));
         if (breatheWarning) {
             alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), Integer.parseInt(interval) * AlarmManager.INTERVAL_HOUR, pendingIntent);
