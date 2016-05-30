@@ -104,6 +104,8 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
         rememberBreathe(preferences);
         rememberFood(preferences);
         rememberSun(preferences);
+        rememberSports(preferences);
+        rememberMeditation(preferences);
 
     }
 
