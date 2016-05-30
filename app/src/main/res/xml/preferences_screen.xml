@@ -41,8 +41,8 @@
         <ListPreference
             android:defaultValue="@string/breathe.interval.default"
             android:dependency="@string/breathe.category.key"
-            android:entries="@array/breathe.interval.entries"
-            android:entryValues="@array/breathe.interval.entryvalues"
+            android:entries="@array/breathe_interval_entries"
+            android:entryValues="@array/breathe_interval_entryvalues"
             android:key="@string/breathe.category.interval_key"
             android:summary="@string/breathe.warning.interval_summary"
             android:title="@string/breathe.warning.interval" />
