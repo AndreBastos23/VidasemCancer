@@ -13,9 +13,13 @@ public class NotifyService extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Intent intent1 = new Intent(context, NotificationService.class);
-        intent1.setAction(intent.getAction());
-        context.startService(intent1);
+        if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
+
+        } else {
+            Intent intent1 = new Intent(context, NotificationService.class);
+            intent1.setAction(intent.getAction());
+            context.startService(intent1);
+        }
 
     }
 }
