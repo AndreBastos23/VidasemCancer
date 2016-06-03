@@ -157,7 +157,6 @@ public class WaterFragment extends Fragment {
 
         RealmResults<Water> results = realm.where(Water.class).contains("date", getTodayInString(-7).substring(2, 10)).findAll();
 
-
         ArrayList<Entry> vals = new ArrayList<Entry>();
         ArrayList<String> vals2 = new ArrayList<String>();
         Iterator<Water> it = results.iterator();

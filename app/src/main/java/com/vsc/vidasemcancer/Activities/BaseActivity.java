@@ -6,7 +6,6 @@ import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.DrawerLayout;
@@ -86,8 +85,7 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
     }
 
     private void handleNotifications() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        NotificationMng.initiateAll(BaseActivity.this, preferences);
+        NotificationMng.initiateAll(BaseActivity.this);
     }
 
     private void setupToolbar() {
