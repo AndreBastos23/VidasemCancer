@@ -4,7 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
-import com.vsc.vidasemcancer.Activities.BaseActivity;
+import com.vsc.vidasemcancer.Managers.NotificationMng;
 import com.vsc.vidasemcancer.R;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -21,6 +21,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.preferences_screen);
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
@@ -28,19 +29,20 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        BaseActivity baseActivity = (BaseActivity) getActivity();
-        if (key.equals(getString(R.string.water_warning_key)) || key.equals(getString(R.string.water_warning_interval_key))) {
-            baseActivity.rememberWater(sharedPreferences);
-        } else if (key.equals(getString(R.string.sun_warning_key)) || key.equals(getString(R.string.sun_time_key))) {
-            baseActivity.rememberSun(sharedPreferences);
-        } else if (key.equals(getString(R.string.breathe_warning_key)) || key.equals(getString(R.string.breathe_category_interval_key))) {
-            baseActivity.rememberBreathe(sharedPreferences);
-        } else if (key.equals(getString(R.string.eat_warning_key))) {
-            baseActivity.rememberFood(sharedPreferences);
-        } else if (key.equals(getString(R.string.sports_warning_key)) || key.equals(getString(R.string.sports_time_key))) {
-            baseActivity.rememberSports(sharedPreferences);
-        } else if (key.equals(getString(R.string.meditation_warning_key)) || key.equals(getString(R.string.meditation_time_key))) {
-            baseActivity.rememberMeditation(sharedPreferences);
+        if (isAdded()) {
+            if (key.equals(getString(R.string.water_warning_key)) || key.equals(getString(R.string.water_warning_interval_key))) {
+                NotificationMng.rememberWater(getActivity(), sharedPreferences);
+            } else if (key.equals(getString(R.string.sun_warning_key)) || key.equals(getString(R.string.sun_time_key))) {
+                NotificationMng.rememberSun(getActivity(), sharedPreferences);
+            } else if (key.equals(getString(R.string.breathe_warning_key)) || key.equals(getString(R.string.breathe_category_interval_key))) {
+                NotificationMng.rememberBreathe(getActivity(), sharedPreferences);
+            } else if (key.equals(getString(R.string.eat_warning_key))) {
+                NotificationMng.rememberFood(getActivity(), sharedPreferences);
+            } else if (key.equals(getString(R.string.sports_warning_key)) || key.equals(getString(R.string.sports_time_key))) {
+                NotificationMng.rememberSports(getActivity(), sharedPreferences);
+            } else if (key.equals(getString(R.string.meditation_warning_key)) || key.equals(getString(R.string.meditation_time_key))) {
+                NotificationMng.rememberMeditation(getActivity(), sharedPreferences);
+            }
         }
     }
 
