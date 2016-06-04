@@ -85,5 +85,19 @@
     <string name="breathe.category.interval_key">breathe.category.interval_key</string>
     <string name="breathe.warning.interval_summary">Tempo entre avisos para a respiração</string>
     <string name="breathe.warning.interval">Intervalo do aviso</string>
+    <string name="water_notification_title">Água</string>
+    <string name="water.notification.text">Hora de beber água</string>
+    <string name="sun_notification_title">Sol</string>
+    <string name="sun.notification.text">Hora de sentir o sol no seu corpo</string>
+    <string name="breathe.notification.title">Respiração</string>
+    <string name="breathe.notification.text">Faça 3 respirações lentas e profundas</string>
+    <string name="eat.notification.title">Alimentação</string>
+    <string name="eat.breakfast.notification.text">Hora de tomar o café da manhã</string>
+    <string name="eat.lunch.notification.text">Hora de almoçar</string>
+    <string name="eat.dinner.notification.text">Hora de jantar</string>
+    <string name="sports_notification.title">Desporto</string>
+    <string name="sports.notification.text">Hora de cuidar do fisico</string>
+    <string name="meditation.notification.title">Meditação</string>
+    <string name="meditation.notification.text">Faça meditação durante 15 minutos e conecte-se com a sua alma</string>
 
 </resources>
