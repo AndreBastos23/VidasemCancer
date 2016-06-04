@@ -25,12 +25,14 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.vsc.vidasemcancer.Formatters.LiterAxisFormatter;
 import com.vsc.vidasemcancer.Models.Water;
+import com.vsc.vidasemcancer.Models.WaterMigration;
 import com.vsc.vidasemcancer.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 
 import io.realm.Realm;
@@ -44,6 +46,7 @@ public class WaterFragment extends Fragment {
 
 
     private Water waterObject;
+    private RealmResults<Water> graphData;
 
     private RealmConfiguration realmConfig;
     private Realm realm;
@@ -64,7 +67,7 @@ public class WaterFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        realmConfig = new RealmConfiguration.Builder(getActivity()).build();
+        realmConfig = new RealmConfiguration.Builder(getActivity()).migration(new WaterMigration()).build();
         // Open the Realm for the UI thread.
         realm = Realm.getInstance(realmConfig);
 
@@ -76,12 +79,16 @@ public class WaterFragment extends Fragment {
             waterObject = realm.createObject(Water.class);
             waterObject.setCurrentLevel(0);
             waterObject.setObjective(2000);
-
+            waterObject.setDDate(new Date());
             waterObject.setDate(today);
             realm.commitTransaction();
         } else {
             waterObject = results.first();
         }
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, -7);
+        Date sevenDaysAgo = new Date(calendar.getTimeInMillis());
+        graphData = realm.where(Water.class).between("dDate", sevenDaysAgo, waterObject.getdDate()).findAll();
 
         lineChart = (LineChart) getActivity().findViewById(R.id.chart);
 
@@ -131,12 +138,18 @@ public class WaterFragment extends Fragment {
             waterObject = realm.createObject(Water.class);
             waterObject.setCurrentLevel(0);
             waterObject.setObjective(2000);
-
+            waterObject.setDDate(new Date());
             waterObject.setDate(today);
             realm.commitTransaction();
         } else {
             waterObject = results.first();
         }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, -7);
+        Date sevenDaysAgo = new Date(calendar.getTimeInMillis());
+        graphData = realm.where(Water.class).between("dDate", sevenDaysAgo, waterObject.getdDate()).findAll();
+
         ImageView imageView2 = (ImageView) getActivity().findViewById(R.id.water_image);
         imageView2.setImageResource(setImage());
         TextView textView = (TextView) getActivity().findViewById(R.id.water_text_view);
@@ -155,11 +168,11 @@ public class WaterFragment extends Fragment {
     private void lastWeekData() {
 
 
-        RealmResults<Water> results = realm.where(Water.class).contains("date", getTodayInString(-7).substring(2, 10)).findAll();
+
 
         ArrayList<Entry> vals = new ArrayList<Entry>();
         ArrayList<String> vals2 = new ArrayList<String>();
-        Iterator<Water> it = results.iterator();
+        Iterator<Water> it = graphData.iterator();
         int cont = 0;
 
         while (it.hasNext()) {
