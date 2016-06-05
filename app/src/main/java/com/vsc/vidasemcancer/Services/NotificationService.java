@@ -28,6 +28,7 @@ import io.realm.RealmResults;
 
 public class NotificationService extends IntentService {
 
+    private static RealmConfiguration realmConfiguration;
     public final int WATER_NOTIFICATION = 0;
     public final int BREATHE_NOTIFICATION = 1;
     public final int BREAKFAST_NOTIFICATION = 2;
@@ -84,8 +85,8 @@ public class NotificationService extends IntentService {
     }
 
     private boolean isObjectiveCompleted() {
-        RealmConfiguration realmConfig = new RealmConfiguration.Builder(getBaseContext()).build();
-        Realm realm = Realm.getInstance(realmConfig);
+
+        Realm realm = Realm.getDefaultInstance();
         Calendar cal = Calendar.getInstance();
 
         DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -94,11 +95,14 @@ public class NotificationService extends IntentService {
         RealmResults<Water> results = realm.where(Water.class).equalTo("date", str).findAll();
 
         if (results.isEmpty()) {
+
             return false;
         } else {
             Water waterObject = results.first();
+
             return waterObject.getCurrentLevel() >= waterObject.getObjective();
         }
+
     }
 
     private void getWaterNotification() {

@@ -51,12 +51,84 @@
     <PreferenceCategory
         android:key="@string/eat_settings"
         android:title="@string/eat_settings">
-        <CheckBoxPreference
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:defaultValue="true"
-            android:key="@string/eat.warning.key"
-            android:title="@string/eat_warning_settings" />
+        <PreferenceScreen android:title="@string/eat.preferencescreen.title">
+
+            <CheckBoxPreference
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:defaultValue="true"
+                android:key="@string/eat.warning.key"
+                android:title="@string/eat_warning_settings" />
+
+            <CheckBoxPreference
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:defaultValue="true"
+                android:dependency="@string/eat.warning.key"
+                android:key="@string/eat.breakfast.warning.key"
+                android:title="@string/eat.breakfast.warning.preference.title" />
+
+            <com.vsc.vidasemcancer.Preferences.TimePreference
+                android:defaultValue="09:00"
+                android:dependency="@string/eat.breakfast.warning.key"
+                android:key="@string/eat.breakfast.time.key"
+                android:title="@string/warning_hour" />
+
+            <CheckBoxPreference
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:defaultValue="true"
+                android:dependency="@string/eat.warning.key"
+                android:key="@string/eat.morningsnack.warning.key"
+                android:title="@string/eat.morningsnack.warning.preference.title" />
+
+            <com.vsc.vidasemcancer.Preferences.TimePreference
+                android:defaultValue="10:30"
+                android:dependency="@string/eat.morningsnack.warning.key"
+                android:key="@string/eat.morningsnack.time.key"
+                android:title="@string/warning_hour" />
+
+            <CheckBoxPreference
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:defaultValue="true"
+                android:dependency="@string/eat.warning.key"
+                android:key="@string/eat.lunch.warning.key"
+                android:title="@string/eat.lunch.warning.preference.title" />
+            <com.vsc.vidasemcancer.Preferences.TimePreference
+                android:defaultValue="09:00"
+                android:dependency="@string/eat.lunch.warning.key"
+                android:key="@string/eat.lunch.time.key"
+                android:title="@string/warning_hour" />
+
+            <CheckBoxPreference
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:defaultValue="true"
+                android:dependency="@string/eat.warning.key"
+                android:key="@string/eat.afternoonsnack.warning.key"
+                android:title="@string/eat.afternoonsnack.warning.preference.title" />
+            <com.vsc.vidasemcancer.Preferences.TimePreference
+                android:defaultValue="09:00"
+                android:dependency="@string/eat.afternoonsnack.warning.key"
+                android:key="@string/eat.afternoonsnack.time.key"
+                android:title="@string/warning_hour" />
+            <CheckBoxPreference
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:defaultValue="true"
+                android:dependency="@string/eat.warning.key"
+                android:key="@string/eat.dinner.warning.key"
+                android:title="@string/eat.dinner.warning.preference.title" />
+
+            <com.vsc.vidasemcancer.Preferences.TimePreference
+                android:defaultValue="09:00"
+                android:dependency="@string/eat.dinner.warning.key"
+                android:key="@string/eat.dinner.time.key"
+                android:title="@string/warning_hour" />
+
+        </PreferenceScreen>
+
 
     </PreferenceCategory>
 

@@ -99,5 +99,21 @@
     <string name="sports.notification.text">Hora de cuidar do fisico</string>
     <string name="meditation.notification.title">Meditação</string>
     <string name="meditation.notification.text">Faça meditação durante 15 minutos e conecte-se com a sua alma</string>
+    <string name="eat.breakfast.warning.key">eat.breakfast.warning.key</string>
+    <string name="eat.breakfast.warning.preference.title">Aviso para Café da Manhã</string>
+    <string name="eat.morningsnack.warning.key">eat.morningsnack.warning.key</string>
+    <string name="eat.morningsnack.warning.preference.title">Aviso para lanche da manhã</string>
+    <string name="eat.lunch.warning.key">eat.lunch.warning.key</string>
+    <string name="eat.lunch.warning.preference.title">Aviso para almoço</string>
+    <string name="eat.afternoonsnack.warning.key">eat.afternoonsnack.warning.key</string>
+    <string name="eat.afternoonsnack.warning.preference.title">Aviso para lanche da tarde</string>
+    <string name="eat.dinner.warning.key">eat.dinner.warning.key</string>
+    <string name="eat.dinner.warning.preference.title">Aviso para jantar</string>
+    <string name="eat.breakfast.time.key">eat.breakfast.time.key</string>
+    <string name="eat.morningsnack.time.key">eat.morningsnack.time.key</string>
+    <string name="eat.lunch.time.key">eat.lunch.time.key</string>
+    <string name="eat.afternoonsnack.time.key">eat.afternoonsnack.time.key</string>
+    <string name="eat.dinner.time.key">eat.dinner.time.key</string>
+    <string name="eat.preferencescreen.title">Avisos de alimentação</string>
 
 </resources>
