@@ -6,11 +6,13 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
@@ -28,6 +30,8 @@ import io.realm.RealmResults;
 
 public class NotificationService extends IntentService {
 
+    private static final int MORNING_SNACK_NOTIFICATION = 8;
+    private static final int AFTERNOON_SNACK_NOTIFICATION = 9;
     private static RealmConfiguration realmConfiguration;
     public final int WATER_NOTIFICATION = 0;
     public final int BREATHE_NOTIFICATION = 1;
@@ -50,10 +54,18 @@ public class NotificationService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         int notificationId = 100;
 
+        if (nightTime()) {
+            return;
+        }
+
+
         if (intent.getAction().equals(getString(R.string.water_notification))) {
-            if (isObjectiveCompleted()) {
+
+            //TODO: REVIEW AT LATER TIME. OPENING REALM INSTANCE WITH DIFFERENT CONTEXT IS THROWING EXCEPTIONS
+            /*Realm realm = Realm.getDefaultInstance();
+            if (isObjectiveCompleted(realm)) {
                 return;
-            }
+            }*/
             notificationId = WATER_NOTIFICATION;
             getWaterNotification();
         } else if (intent.getAction().equals(getString(R.string.sun_notification))) {
@@ -77,6 +89,12 @@ public class NotificationService extends IntentService {
         } else if (intent.getAction().equals(getString(R.string.meditation_notification))) {
             notificationId = MEDITATION_NOTIFICATION;
             getMeditationNotification();
+        } else if (intent.getAction().equals(getString(R.string.eat_morningsnack_notification))) {
+            notificationId = MORNING_SNACK_NOTIFICATION;
+            getFoodNotification(notificationId);
+        } else if (intent.getAction().equals(getString(R.string.eat_afternoonsnack_notification))) {
+            notificationId = AFTERNOON_SNACK_NOTIFICATION;
+            getFoodNotification(notificationId);
         }
 
         notificationManager.notify(notificationId, notification);
@@ -84,9 +102,34 @@ public class NotificationService extends IntentService {
 
     }
 
-    private boolean isObjectiveCompleted() {
+    private boolean nightTime() {
+        Boolean night = false;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String sleep = sharedPreferences.getString(getString(R.string.notification_settings_sleep_key), "22:00");
+        String wakeUp = sharedPreferences.getString(getString(R.string.notification_settings_wakeUp_key), "09:00");
 
-        Realm realm = Realm.getDefaultInstance();
+        String[] sleepA = sleep.split(":");
+        String[] wakeUpA = wakeUp.split(":");
+
+        Calendar nightTime = Calendar.getInstance();
+        nightTime.set(Calendar.HOUR_OF_DAY, Integer.valueOf(sleepA[0]));
+        nightTime.set(Calendar.MINUTE, Integer.valueOf(sleepA[1]));
+
+        Calendar daytime = Calendar.getInstance();
+        daytime.set(Calendar.HOUR_OF_DAY, Integer.valueOf(wakeUpA[0]));
+        daytime.set(Calendar.MINUTE, Integer.valueOf(wakeUpA[1]));
+
+        Calendar now = Calendar.getInstance();
+        if (now.after(nightTime) || now.before(daytime)) {
+            return true;
+        }
+
+        return night;
+    }
+
+    private boolean isObjectiveCompleted(Realm realm) {
+
+
         Calendar cal = Calendar.getInstance();
 
         DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -205,7 +248,7 @@ public class NotificationService extends IntentService {
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
 
         switch (notificationId) {
-            case 2:
+            case BREAKFAST_NOTIFICATION:
                 notification = new NotificationCompat.Builder(this)
                         .setContentIntent(pendingIntent)
                         .setSmallIcon(R.drawable.ic_stat_rsz_vidasemcancer)
@@ -217,7 +260,7 @@ public class NotificationService extends IntentService {
                         .setContentTitle(getString(R.string.eat_notification_title))
                         .setContentText(getString(R.string.eat_breakfast_notification_text)).build();
                 break;
-            case 3:
+            case LUNCH_NOTIFICATION:
                 notification = new NotificationCompat.Builder(this)
                         .setContentIntent(pendingIntent)
                         .setSmallIcon(R.drawable.ic_stat_rsz_vidasemcancer)
@@ -229,7 +272,7 @@ public class NotificationService extends IntentService {
                         .setContentTitle(getString(R.string.eat_notification_title))
                         .setContentText(getString(R.string.eat_lunch_notification_text)).build();
                 break;
-            case 4:
+            case DINNER_NOTIFICATION:
                 notification = new NotificationCompat.Builder(this)
                         .setContentIntent(pendingIntent)
                         .setSmallIcon(R.drawable.ic_stat_rsz_vidasemcancer)
@@ -240,6 +283,20 @@ public class NotificationService extends IntentService {
                         .setSound(soundUri)
                         .setContentTitle(getString(R.string.eat_notification_title))
                         .setContentText(getString(R.string.eat_dinner_notification_text)).build();
+                break;
+            case AFTERNOON_SNACK_NOTIFICATION:
+            case MORNING_SNACK_NOTIFICATION:
+                notification = new NotificationCompat.Builder(this)
+                        .setContentIntent(pendingIntent)
+                        .setSmallIcon(R.drawable.ic_stat_rsz_vidasemcancer)
+                        .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_stat_maps_local_restaurant))
+                        .setTicker("ticker value")
+                        .setAutoCancel(true)
+                        .setPriority(8)
+                        .setSound(soundUri)
+                        .setContentTitle(getString(R.string.eat_notification_title))
+                        .setContentText(getString(R.string.eat_snack_notification_text)).build();
+
                 break;
             default:
                 notification = new NotificationCompat.Builder(this)

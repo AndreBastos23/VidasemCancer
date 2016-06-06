@@ -115,5 +115,14 @@
     <string name="eat.afternoonsnack.time.key">eat.afternoonsnack.time.key</string>
     <string name="eat.dinner.time.key">eat.dinner.time.key</string>
     <string name="eat.preferencescreen.title">Avisos de alimentação</string>
+    <string name="notification.settings.key">notification.settings.key</string>
+    <string name="notification.settings.title">Horario dos avisos</string>
+    <string name="notification.settings.wakeUp.key">notification.settings.wakeUp.key</string>
+    <string name="notification.settings.wakeUp.title">Hora de Acordar</string>
+    <string name="notification.settings.sleep.key">notification.settings.sleep.key</string>
+    <string name="notification.settings.sleep.title">Hora de dormir</string>
+    <string name="eat.morningsnack.notification">eat.morningsnack.notification</string>
+    <string name="eat.afternoonsnack.notification">eat.afternoonsnack.notification</string>
+    <string name="eat.snack.notification.text">Hora para um snack</string>
 
 </resources>

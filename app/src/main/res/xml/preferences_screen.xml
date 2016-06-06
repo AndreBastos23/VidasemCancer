@@ -1,6 +1,23 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <PreferenceCategory
+        android:key="@string/notification.settings.key"
+        android:title="@string/notification.settings.title">
+
+        <com.vsc.vidasemcancer.Preferences.TimePreference
+            android:defaultValue="09:00"
+            android:key="@string/notification.settings.wakeUp.key"
+            android:title="@string/notification.settings.wakeUp.title" />
+
+        <com.vsc.vidasemcancer.Preferences.TimePreference
+            android:defaultValue="22:00"
+            android:key="@string/notification.settings.sleep.key"
+            android:title="@string/notification.settings.sleep.title" />
+
+    </PreferenceCategory>
+
     <PreferenceCategory
         android:key="@string/water_category_key"
         android:title="@string/water_settings">
