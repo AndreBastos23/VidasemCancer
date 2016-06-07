@@ -113,7 +113,7 @@
                 android:key="@string/eat.lunch.warning.key"
                 android:title="@string/eat.lunch.warning.preference.title" />
             <com.vsc.vidasemcancer.Preferences.TimePreference
-                android:defaultValue="09:00"
+                android:defaultValue="13:00"
                 android:dependency="@string/eat.lunch.warning.key"
                 android:key="@string/eat.lunch.time.key"
                 android:title="@string/warning_hour" />
@@ -126,7 +126,7 @@
                 android:key="@string/eat.afternoonsnack.warning.key"
                 android:title="@string/eat.afternoonsnack.warning.preference.title" />
             <com.vsc.vidasemcancer.Preferences.TimePreference
-                android:defaultValue="09:00"
+                android:defaultValue="16:30"
                 android:dependency="@string/eat.afternoonsnack.warning.key"
                 android:key="@string/eat.afternoonsnack.time.key"
                 android:title="@string/warning_hour" />
@@ -139,7 +139,7 @@
                 android:title="@string/eat.dinner.warning.preference.title" />
 
             <com.vsc.vidasemcancer.Preferences.TimePreference
-                android:defaultValue="09:00"
+                android:defaultValue="21:00"
                 android:dependency="@string/eat.dinner.warning.key"
                 android:key="@string/eat.dinner.time.key"
                 android:title="@string/warning_hour" />

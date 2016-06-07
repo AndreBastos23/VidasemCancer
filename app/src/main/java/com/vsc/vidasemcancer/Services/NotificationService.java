@@ -17,6 +17,7 @@ import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import com.vsc.vidasemcancer.Activities.BaseActivity;
+import com.vsc.vidasemcancer.Models.PreferenceDate;
 import com.vsc.vidasemcancer.Models.Water;
 import com.vsc.vidasemcancer.R;
 
@@ -47,7 +48,7 @@ public class NotificationService extends IntentService {
 
 
     public NotificationService() {
-        super("not");
+        super("ServiçoDeAvisos");
     }
 
     @Override
@@ -105,19 +106,16 @@ public class NotificationService extends IntentService {
     private boolean nightTime() {
         Boolean night = false;
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String sleep = sharedPreferences.getString(getString(R.string.notification_settings_sleep_key), "22:00");
-        String wakeUp = sharedPreferences.getString(getString(R.string.notification_settings_wakeUp_key), "09:00");
-
-        String[] sleepA = sleep.split(":");
-        String[] wakeUpA = wakeUp.split(":");
+        PreferenceDate sleep = new PreferenceDate(sharedPreferences.getString(getString(R.string.notification_settings_sleep_key), "22:00"));
+        PreferenceDate wakeUp = new PreferenceDate(sharedPreferences.getString(getString(R.string.notification_settings_wakeUp_key), "09:00"));
 
         Calendar nightTime = Calendar.getInstance();
-        nightTime.set(Calendar.HOUR_OF_DAY, Integer.valueOf(sleepA[0]));
-        nightTime.set(Calendar.MINUTE, Integer.valueOf(sleepA[1]));
+        nightTime.set(Calendar.HOUR_OF_DAY, sleep.getHour());
+        nightTime.set(Calendar.MINUTE, sleep.getMinute());
 
         Calendar daytime = Calendar.getInstance();
-        daytime.set(Calendar.HOUR_OF_DAY, Integer.valueOf(wakeUpA[0]));
-        daytime.set(Calendar.MINUTE, Integer.valueOf(wakeUpA[1]));
+        daytime.set(Calendar.HOUR_OF_DAY, wakeUp.getHour());
+        daytime.set(Calendar.MINUTE, wakeUp.getMinute());
 
         Calendar now = Calendar.getInstance();
         if (now.after(nightTime) || now.before(daytime)) {
@@ -159,23 +157,10 @@ public class NotificationService extends IntentService {
 
         Resources res = this.getResources();
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        notification = new NotificationCompat.Builder(this)
-                .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.ic_stat_rsz_vidasemcancer)
-                .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.water_100))
-                .setTicker("ticker value")
-                .setAutoCancel(true)
-                .setPriority(8)
-                .setSound(soundUri)
-                .setContentTitle(getString(R.string.water_notification_title))
-                .setContentText(getString(R.string.water_notification_text)).build();
-        notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
-        notification.defaults |= Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE;
-        notification.ledARGB = 0xFFFFA500;
-        notification.ledOnMS = 800;
-        notification.ledOffMS = 1000;
+        buildNotification(res, soundUri, R.drawable.water_100, R.string.water_notification_title, R.string.water_notification_text);
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
+
 
     public void getSunNotification() {
         Context context = this.getApplicationContext();
@@ -188,21 +173,8 @@ public class NotificationService extends IntentService {
 
         Resources res = this.getResources();
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        notification = new NotificationCompat.Builder(this)
-                .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.ic_stat_rsz_vidasemcancer)
-                .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_stat_image_wb_sunny))
-                .setTicker("ticker value")
-                .setAutoCancel(true)
-                .setPriority(8)
-                .setSound(soundUri)
-                .setContentTitle(getString(R.string.sun_notification_title))
-                .setContentText(getString(R.string.sun_notification_text)).build();
-        notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
-        notification.defaults |= Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE;
-        notification.ledARGB = 0xFFFFA500;
-        notification.ledOnMS = 800;
-        notification.ledOffMS = 1000;
+        buildNotification(res, soundUri, R.drawable.ic_stat_image_wb_sunny, R.string.sun_notification_title, R.string.sun_notification_text);
+
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
 
@@ -217,21 +189,8 @@ public class NotificationService extends IntentService {
 
         Resources res = this.getResources();
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        notification = new NotificationCompat.Builder(this)
-                .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.ic_stat_rsz_vidasemcancer)
-                .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_stat_action_favorite_outline))
-                .setTicker("ticker value")
-                .setAutoCancel(true)
-                .setPriority(8)
-                .setSound(soundUri)
-                .setContentTitle(getString(R.string.breathe_notification_title))
-                .setContentText(getString(R.string.breathe_notification_text)).build();
-        notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
-        notification.defaults |= Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE;
-        notification.ledARGB = 0xFFFFA500;
-        notification.ledOnMS = 800;
-        notification.ledOffMS = 1000;
+        buildNotification(res, soundUri, R.drawable.ic_stat_action_favorite_outline, R.string.breathe_notification_title, R.string.breathe_notification_text);
+
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
 
@@ -249,85 +208,23 @@ public class NotificationService extends IntentService {
 
         switch (notificationId) {
             case BREAKFAST_NOTIFICATION:
-                notification = new NotificationCompat.Builder(this)
-                        .setContentIntent(pendingIntent)
-                        .setSmallIcon(R.drawable.ic_stat_rsz_vidasemcancer)
-                        .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_stat_maps_local_restaurant))
-                        .setTicker("ticker value")
-                        .setAutoCancel(true)
-                        .setPriority(8)
-                        .setSound(soundUri)
-                        .setContentTitle(getString(R.string.eat_notification_title))
-                        .setContentText(getString(R.string.eat_breakfast_notification_text)).build();
+                buildNotification(res, soundUri, R.drawable.ic_stat_maps_local_restaurant, R.string.eat_notification_title, R.string.eat_breakfast_notification_text);
                 break;
             case LUNCH_NOTIFICATION:
-                notification = new NotificationCompat.Builder(this)
-                        .setContentIntent(pendingIntent)
-                        .setSmallIcon(R.drawable.ic_stat_rsz_vidasemcancer)
-                        .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_stat_maps_local_restaurant))
-                        .setTicker("ticker value")
-                        .setAutoCancel(true)
-                        .setPriority(8)
-                        .setSound(soundUri)
-                        .setContentTitle(getString(R.string.eat_notification_title))
-                        .setContentText(getString(R.string.eat_lunch_notification_text)).build();
+                buildNotification(res, soundUri, R.drawable.ic_stat_maps_local_restaurant, R.string.eat_notification_title, R.string.eat_lunch_notification_text);
                 break;
             case DINNER_NOTIFICATION:
-                notification = new NotificationCompat.Builder(this)
-                        .setContentIntent(pendingIntent)
-                        .setSmallIcon(R.drawable.ic_stat_rsz_vidasemcancer)
-                        .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_stat_maps_local_restaurant))
-                        .setTicker("ticker value")
-                        .setAutoCancel(true)
-                        .setPriority(8)
-                        .setSound(soundUri)
-                        .setContentTitle(getString(R.string.eat_notification_title))
-                        .setContentText(getString(R.string.eat_dinner_notification_text)).build();
+                buildNotification(res, soundUri, R.drawable.ic_stat_maps_local_restaurant, R.string.eat_notification_title, R.string.eat_dinner_notification_text);
                 break;
             case AFTERNOON_SNACK_NOTIFICATION:
             case MORNING_SNACK_NOTIFICATION:
-                notification = new NotificationCompat.Builder(this)
-                        .setContentIntent(pendingIntent)
-                        .setSmallIcon(R.drawable.ic_stat_rsz_vidasemcancer)
-                        .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_stat_maps_local_restaurant))
-                        .setTicker("ticker value")
-                        .setAutoCancel(true)
-                        .setPriority(8)
-                        .setSound(soundUri)
-                        .setContentTitle(getString(R.string.eat_notification_title))
-                        .setContentText(getString(R.string.eat_snack_notification_text)).build();
-
+                buildNotification(res, soundUri, R.drawable.ic_stat_maps_local_restaurant, R.string.eat_notification_title, R.string.eat_snack_notification_text);
                 break;
             default:
-                notification = new NotificationCompat.Builder(this)
-                        .setContentIntent(pendingIntent)
-                        .setSmallIcon(R.drawable.ic_stat_rsz_vidasemcancer)
-                        .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_stat_maps_local_restaurant))
-                        .setTicker("ticker value")
-                        .setAutoCancel(true)
-                        .setPriority(8)
-                        .setSound(soundUri)
-                        .setContentTitle(getString(R.string.eat_notification_title))
-                        .setContentText("Já Comeu?").build();
+                buildNotification(res, soundUri, R.drawable.ic_stat_maps_local_restaurant, R.string.eat_notification_title, R.string.eat_generic_notification_text);
 
         }
 
-
-        notification = new NotificationCompat.Builder(this)
-                .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.ic_stat_rsz_vidasemcancer)
-                .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_stat_maps_local_restaurant))
-                .setTicker("ticker value")
-                .setAutoCancel(true)
-                .setPriority(8)
-                .setSound(soundUri)
-                .setContentTitle("Lembrete")
-                .setContentText("Já Comeu?").build();
-        notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
-        notification.defaults |= Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE;
-        notification.ledARGB = 0xFFFFA500;
-        notification.ledOnMS = 800;
-        notification.ledOffMS = 1000;
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
 
@@ -342,21 +239,8 @@ public class NotificationService extends IntentService {
 
         Resources res = this.getResources();
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        notification = new NotificationCompat.Builder(this)
-                .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.ic_stat_rsz_vidasemcancer)
-                .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_stat_action_favorite_outline))
-                .setTicker("ticker value")
-                .setAutoCancel(true)
-                .setPriority(8)
-                .setSound(soundUri)
-                .setContentTitle(getString(R.string.sports_notification_title))
-                .setContentText(getString(R.string.sports_notification_text)).build();
-        notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
-        notification.defaults |= Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE;
-        notification.ledARGB = 0xFFFFA500;
-        notification.ledOnMS = 800;
-        notification.ledOffMS = 1000;
+        buildNotification(res, soundUri, R.drawable.ic_stat_action_favorite_outline, R.string.sports_notification_title, R.string.sports_notification_text);
+
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
 
@@ -371,21 +255,26 @@ public class NotificationService extends IntentService {
 
         Resources res = this.getResources();
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        buildNotification(res, soundUri, R.drawable.ic_stat_action_favorite_outline, R.string.meditation_notification_title, R.string.meditation_notification_text);
+
+        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+    }
+
+    private void buildNotification(Resources res, Uri soundUri, int largeImage, int title, int content) {
         notification = new NotificationCompat.Builder(this)
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.ic_stat_rsz_vidasemcancer)
-                .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_stat_action_favorite_outline))
+                .setLargeIcon(BitmapFactory.decodeResource(res, largeImage))
                 .setTicker("ticker value")
                 .setAutoCancel(true)
                 .setPriority(8)
                 .setSound(soundUri)
-                .setContentTitle(getString(R.string.meditation_notification_title))
-                .setContentText(getString(R.string.meditation_notification_text)).build();
+                .setContentTitle(getString(title))
+                .setContentText(getString(content)).build();
         notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
         notification.defaults |= Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE;
         notification.ledARGB = 0xFFFFA500;
         notification.ledOnMS = 800;
         notification.ledOffMS = 1000;
-        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
 }
