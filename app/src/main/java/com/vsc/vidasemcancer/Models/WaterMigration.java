@@ -41,5 +41,8 @@ public class WaterMigration implements RealmMigration {
             oldVersion++;
 
         }
+
+        realm.close();
     }
+
 }

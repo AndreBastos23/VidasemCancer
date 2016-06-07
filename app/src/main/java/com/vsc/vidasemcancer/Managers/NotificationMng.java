@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
+import com.vsc.vidasemcancer.Models.PreferenceDate;
 import com.vsc.vidasemcancer.R;
 import com.vsc.vidasemcancer.Receivers.NotifyService;
 
@@ -23,6 +24,8 @@ public class NotificationMng {
     private static final int SUN_NOTIFICATION = 5;
     private static final int MEDITATION_NOTIFICATION = 6;
     private static final int SPORTS_NOTIFICATION = 7;
+    private static final int MORNING_SNACK_NOTIFICATION = 8;
+    private static final int AFTERNOON_SNACK_NOTIFICATION = 9;
 
 
     public static void scheduleNotification(Boolean schedule, Context context, int notificationId, long interval, Calendar calendar, String action) {
@@ -113,29 +116,60 @@ public class NotificationMng {
 
     public static void rememberFood(Context context, SharedPreferences preferences) {
         Calendar breakfastCalendar = Calendar.getInstance();
-        breakfastCalendar.set(Calendar.HOUR_OF_DAY, 9);
+        PreferenceDate breakfastHour = new PreferenceDate(preferences.getString(
+                context.getString(R.string.eat_breakfast_time_key), "09:00"));
+        breakfastCalendar.set(Calendar.HOUR_OF_DAY, breakfastHour.getHour());
+        breakfastCalendar.set(Calendar.MINUTE, breakfastHour.getMinute());
+
+        Calendar morningSnackCalendar = Calendar.getInstance();
+        PreferenceDate morningSnackHour = new PreferenceDate(preferences.getString(
+                context.getString(R.string.eat_morningsnack_time_key), "10:30"));
+        morningSnackCalendar.set(Calendar.HOUR_OF_DAY, morningSnackHour.getHour());
+        morningSnackCalendar.set(Calendar.MINUTE, morningSnackHour.getMinute());
 
         Calendar lunchCalendar = Calendar.getInstance();
-        lunchCalendar.set(Calendar.HOUR_OF_DAY, 13);
+        PreferenceDate lunchHour = new PreferenceDate(preferences.getString(context.getString(
+                R.string.eat_lunch_time_key), "13:00"));
+        lunchCalendar.set(Calendar.HOUR_OF_DAY, lunchHour.getHour());
+        lunchCalendar.set(Calendar.MINUTE, lunchHour.getMinute());
+
+
+        Calendar afternoonSnackCalendar = Calendar.getInstance();
+        PreferenceDate afternoonSnackHour = new PreferenceDate(preferences.getString(
+                context.getString(R.string.eat_afternoonsnack_time_key), "16:30"));
+        afternoonSnackCalendar.set(Calendar.HOUR_OF_DAY, afternoonSnackHour.getHour());
+        afternoonSnackCalendar.set(Calendar.MINUTE, afternoonSnackHour.getMinute());
 
         Calendar dinnerCalendar = Calendar.getInstance();
-        dinnerCalendar.set(Calendar.HOUR_OF_DAY, 21);
+        PreferenceDate dinnerHour = new PreferenceDate(preferences.getString(
+                context.getString(R.string.eat_dinner_time_key), "21:00"));
+        dinnerCalendar.set(Calendar.HOUR_OF_DAY, dinnerHour.getHour());
+        dinnerCalendar.set(Calendar.MINUTE, dinnerHour.getMinute());
 
 
         Boolean foodWarning = preferences.getBoolean(context.getString(R.string.eat_warning_key), true);
         if (breakfastCalendar.before(Calendar.getInstance())) {
             breakfastCalendar.add(Calendar.DAY_OF_MONTH, 1);
         }
+        if (morningSnackCalendar.before(Calendar.getInstance())) {
+            morningSnackCalendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
         if (lunchCalendar.before(Calendar.getInstance())) {
             lunchCalendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        if (afternoonSnackCalendar.before(Calendar.getInstance())) {
+            afternoonSnackCalendar.add(Calendar.DAY_OF_MONTH, 1);
         }
         if (dinnerCalendar.before(Calendar.getInstance())) {
             dinnerCalendar.add(Calendar.DAY_OF_MONTH, 1);
         }
 
         scheduleNotification(foodWarning, context, BREAKFAST_NOTIFICATION, AlarmManager.INTERVAL_DAY, breakfastCalendar, context.getString(R.string.eat_breakfast_notification));
+        scheduleNotification(foodWarning, context, MORNING_SNACK_NOTIFICATION, AlarmManager.INTERVAL_DAY, morningSnackCalendar, context.getString(R.string.eat_morningsnack_notification));
         scheduleNotification(foodWarning, context, LUNCH_NOTIFICATION, AlarmManager.INTERVAL_DAY, lunchCalendar, context.getString(R.string.eat_lunch_notification));
+        scheduleNotification(foodWarning, context, AFTERNOON_SNACK_NOTIFICATION, AlarmManager.INTERVAL_DAY, afternoonSnackCalendar, context.getString(R.string.eat_afternoonsnack_notification));
         scheduleNotification(foodWarning, context, DINNER_NOTIFICATION, AlarmManager.INTERVAL_DAY, dinnerCalendar, context.getString(R.string.eat_dinner_notification));
+
 
     }
 

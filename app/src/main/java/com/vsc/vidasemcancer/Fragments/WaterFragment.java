@@ -45,10 +45,9 @@ import io.realm.RealmResults;
 public class WaterFragment extends Fragment {
 
 
+    private static RealmConfiguration realmConfig;
     private Water waterObject;
     private RealmResults<Water> graphData;
-
-    private RealmConfiguration realmConfig;
     private Realm realm;
 
     private ImageButton upArrow;
@@ -67,9 +66,14 @@ public class WaterFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        realmConfig = new RealmConfiguration.Builder(getActivity()).migration(new WaterMigration()).build();
+        if (realmConfig == null) {
+            realmConfig = new RealmConfiguration.Builder(getActivity()).migration(new WaterMigration()).build();
+            Realm.setDefaultConfiguration(realmConfig);
+        }
         // Open the Realm for the UI thread.
+
         realm = Realm.getInstance(realmConfig);
+
 
         String today = getTodayInString(0);
 
@@ -160,14 +164,13 @@ public class WaterFragment extends Fragment {
         lastWeekData();
     }
 
+
     @NonNull
     private String getTextViewText() {
         return getString(R.string.water_value_textview) + " " + String.valueOf(((double) waterObject.getCurrentLevel()) / 1000) + getString(R.string.water_unit);
     }
 
     private void lastWeekData() {
-
-
 
 
         ArrayList<Entry> vals = new ArrayList<Entry>();
