@@ -125,5 +125,6 @@
     <string name="eat.afternoonsnack.notification">eat.afternoonsnack.notification</string>
     <string name="eat.snack.notification.text">Hora para um snack</string>
     <string name="eat.generic.notification.text">Já Comeu?</string>
+    <string name="menu_home">Bem Vindo</string>
 
 </resources>
