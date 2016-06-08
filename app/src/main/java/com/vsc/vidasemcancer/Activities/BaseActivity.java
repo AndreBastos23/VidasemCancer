@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.vsc.vidasemcancer.Fragments.HomeFragment;
 import com.vsc.vidasemcancer.Fragments.RecipeDetailsFragment;
 import com.vsc.vidasemcancer.Fragments.RecipesListFragment;
 import com.vsc.vidasemcancer.Fragments.SettingsDialogFragment;
@@ -123,6 +124,9 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
         Fragment fragment = null;
         Class fragmentClass;
         switch (menuItem.getItemId()) {
+            case R.id.home_item:
+                fragmentClass = HomeFragment.class;
+                break;
             case R.id.water_item:
                 fragmentClass = WaterFragment.class;
                 break;
