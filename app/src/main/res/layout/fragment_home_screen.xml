@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:minHeight="?android:attr/listPreferredItemHeight"
-        android:text="Bem vindo à app Vida Sem Cancer"
+        android:text="Bem vindo à nossa app"
         android:textStyle="bold" />
 
 
