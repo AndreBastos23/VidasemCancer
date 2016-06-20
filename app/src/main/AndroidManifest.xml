@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
+        android:name="VidaSemCancer"
         android:allowBackup="false"
         android:icon="@mipmap/vsc_launcher"
         android:label="@string/app_name"
@@ -39,6 +40,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>
             </intent-filter>
         </receiver>
+        <receiver android:name=".Receivers.WaterReceiver"></receiver>
 
         <activity
             android:name=".Activities.ItemsListActivity"

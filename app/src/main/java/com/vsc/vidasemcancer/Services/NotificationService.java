@@ -20,10 +20,13 @@ import com.vsc.vidasemcancer.Activities.BaseActivity;
 import com.vsc.vidasemcancer.Models.PreferenceDate;
 import com.vsc.vidasemcancer.Models.Water;
 import com.vsc.vidasemcancer.R;
+import com.vsc.vidasemcancer.Receivers.WaterReceiver;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -60,45 +63,49 @@ public class NotificationService extends IntentService {
         }
 
 
-        if (intent.getAction().equals(getString(R.string.water_notification))) {
+        if (intent != null && intent.getAction() != null) {
+            if (intent.getAction().equals(getString(R.string.water_notification))) {
 
-            //TODO: REVIEW AT LATER TIME. OPENING REALM INSTANCE WITH DIFFERENT CONTEXT IS THROWING EXCEPTIONS
+                //TODO: REVIEW AT LATER TIME. OPENING REALM INSTANCE WITH DIFFERENT CONTEXT IS THROWING EXCEPTIONS
             /*Realm realm = Realm.getDefaultInstance();
             if (isObjectiveCompleted(realm)) {
                 return;
             }*/
-            notificationId = WATER_NOTIFICATION;
-            getWaterNotification();
-        } else if (intent.getAction().equals(getString(R.string.sun_notification))) {
-            notificationId = SUN_NOTIFICATION;
-            getSunNotification();
-        } else if (intent.getAction().equals(getString(R.string.breathe_notification))) {
-            notificationId = BREATHE_NOTIFICATION;
-            getBreatheNotification();
-        } else if (intent.getAction().equals(getString(R.string.eat_breakfast_notification))) {
-            notificationId = BREAKFAST_NOTIFICATION;
-            getFoodNotification(notificationId);
-        } else if (intent.getAction().equals(getString(R.string.eat_lunch_notification))) {
-            notificationId = LUNCH_NOTIFICATION;
-            getFoodNotification(notificationId);
-        } else if (intent.getAction().equals(getString(R.string.eat_dinner_notification))) {
-            notificationId = DINNER_NOTIFICATION;
-            getFoodNotification(notificationId);
-        } else if (intent.getAction().equals(getString(R.string.sports_notification))) {
-            notificationId = SPORTS_NOTIFICATION;
-            getSportsNotification();
-        } else if (intent.getAction().equals(getString(R.string.meditation_notification))) {
-            notificationId = MEDITATION_NOTIFICATION;
-            getMeditationNotification();
-        } else if (intent.getAction().equals(getString(R.string.eat_morningsnack_notification))) {
-            notificationId = MORNING_SNACK_NOTIFICATION;
-            getFoodNotification(notificationId);
-        } else if (intent.getAction().equals(getString(R.string.eat_afternoonsnack_notification))) {
-            notificationId = AFTERNOON_SNACK_NOTIFICATION;
-            getFoodNotification(notificationId);
+                notificationId = WATER_NOTIFICATION;
+                getWaterNotification();
+            } else if (intent.getAction().equals(getString(R.string.sun_notification))) {
+                notificationId = SUN_NOTIFICATION;
+                getSunNotification();
+            } else if (intent.getAction().equals(getString(R.string.breathe_notification))) {
+                notificationId = BREATHE_NOTIFICATION;
+                getBreatheNotification();
+            } else if (intent.getAction().equals(getString(R.string.eat_breakfast_notification))) {
+                notificationId = BREAKFAST_NOTIFICATION;
+                getFoodNotification(notificationId);
+            } else if (intent.getAction().equals(getString(R.string.eat_lunch_notification))) {
+                notificationId = LUNCH_NOTIFICATION;
+                getFoodNotification(notificationId);
+            } else if (intent.getAction().equals(getString(R.string.eat_dinner_notification))) {
+                notificationId = DINNER_NOTIFICATION;
+                getFoodNotification(notificationId);
+            } else if (intent.getAction().equals(getString(R.string.sports_notification))) {
+                notificationId = SPORTS_NOTIFICATION;
+                getSportsNotification();
+            } else if (intent.getAction().equals(getString(R.string.meditation_notification))) {
+                notificationId = MEDITATION_NOTIFICATION;
+                getMeditationNotification();
+            } else if (intent.getAction().equals(getString(R.string.eat_morningsnack_notification))) {
+                notificationId = MORNING_SNACK_NOTIFICATION;
+                getFoodNotification(notificationId);
+            } else if (intent.getAction().equals(getString(R.string.eat_afternoonsnack_notification))) {
+                notificationId = AFTERNOON_SNACK_NOTIFICATION;
+                getFoodNotification(notificationId);
+            }
         }
 
-        notificationManager.notify(notificationId, notification);
+        if (notification != null) {
+            notificationManager.notify(notificationId, notification);
+        }
         Log.i("notif", "Notifications sent.");
 
     }
@@ -157,7 +164,13 @@ public class NotificationService extends IntentService {
 
         Resources res = this.getResources();
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        buildNotification(res, soundUri, R.drawable.water_100, R.string.water_notification_title, R.string.water_notification_text);
+
+        Intent nIntent = new Intent(this, WaterReceiver.class);
+        PendingIntent pIntent = PendingIntent.getBroadcast(this, 0, nIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        android.support.v4.app.NotificationCompat.Action action = new android.support.v4.app.NotificationCompat.Action(R.drawable.ic_stat_rsz_vidasemcancer, "Já bebi!", pIntent);
+        List<android.support.v4.app.NotificationCompat.Action> actionList = new LinkedList<>();
+        actionList.add(action);
+        buildNotification(res, soundUri, R.drawable.water_100, R.string.water_notification_title, R.string.water_notification_text, actionList);
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
 
@@ -173,7 +186,7 @@ public class NotificationService extends IntentService {
 
         Resources res = this.getResources();
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        buildNotification(res, soundUri, R.drawable.ic_stat_image_wb_sunny, R.string.sun_notification_title, R.string.sun_notification_text);
+        buildNotification(res, soundUri, R.drawable.ic_stat_image_wb_sunny, R.string.sun_notification_title, R.string.sun_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
 
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
@@ -189,7 +202,7 @@ public class NotificationService extends IntentService {
 
         Resources res = this.getResources();
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        buildNotification(res, soundUri, R.drawable.ic_stat_action_favorite_outline, R.string.breathe_notification_title, R.string.breathe_notification_text);
+        buildNotification(res, soundUri, R.drawable.ic_stat_action_favorite_outline, R.string.breathe_notification_title, R.string.breathe_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
 
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
@@ -208,20 +221,20 @@ public class NotificationService extends IntentService {
 
         switch (notificationId) {
             case BREAKFAST_NOTIFICATION:
-                buildNotification(res, soundUri, R.drawable.ic_stat_maps_local_restaurant, R.string.eat_notification_title, R.string.eat_breakfast_notification_text);
+                buildNotification(res, soundUri, R.drawable.ic_stat_maps_local_restaurant, R.string.eat_notification_title, R.string.eat_breakfast_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
                 break;
             case LUNCH_NOTIFICATION:
-                buildNotification(res, soundUri, R.drawable.ic_stat_maps_local_restaurant, R.string.eat_notification_title, R.string.eat_lunch_notification_text);
+                buildNotification(res, soundUri, R.drawable.ic_stat_maps_local_restaurant, R.string.eat_notification_title, R.string.eat_lunch_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
                 break;
             case DINNER_NOTIFICATION:
-                buildNotification(res, soundUri, R.drawable.ic_stat_maps_local_restaurant, R.string.eat_notification_title, R.string.eat_dinner_notification_text);
+                buildNotification(res, soundUri, R.drawable.ic_stat_maps_local_restaurant, R.string.eat_notification_title, R.string.eat_dinner_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
                 break;
             case AFTERNOON_SNACK_NOTIFICATION:
             case MORNING_SNACK_NOTIFICATION:
-                buildNotification(res, soundUri, R.drawable.ic_stat_maps_local_restaurant, R.string.eat_notification_title, R.string.eat_snack_notification_text);
+                buildNotification(res, soundUri, R.drawable.ic_stat_maps_local_restaurant, R.string.eat_notification_title, R.string.eat_snack_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
                 break;
             default:
-                buildNotification(res, soundUri, R.drawable.ic_stat_maps_local_restaurant, R.string.eat_notification_title, R.string.eat_generic_notification_text);
+                buildNotification(res, soundUri, R.drawable.ic_stat_maps_local_restaurant, R.string.eat_notification_title, R.string.eat_generic_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
 
         }
 
@@ -239,7 +252,7 @@ public class NotificationService extends IntentService {
 
         Resources res = this.getResources();
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        buildNotification(res, soundUri, R.drawable.ic_stat_action_favorite_outline, R.string.sports_notification_title, R.string.sports_notification_text);
+        buildNotification(res, soundUri, R.drawable.ic_stat_action_favorite_outline, R.string.sports_notification_title, R.string.sports_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
 
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
@@ -255,13 +268,15 @@ public class NotificationService extends IntentService {
 
         Resources res = this.getResources();
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        buildNotification(res, soundUri, R.drawable.ic_stat_action_favorite_outline, R.string.meditation_notification_title, R.string.meditation_notification_text);
+        buildNotification(res, soundUri, R.drawable.ic_stat_action_favorite_outline, R.string.meditation_notification_title, R.string.meditation_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
 
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
 
-    private void buildNotification(Resources res, Uri soundUri, int largeImage, int title, int content) {
-        notification = new NotificationCompat.Builder(this)
+    private void buildNotification(Resources res, Uri soundUri, int largeImage, int title, int content, List<android.support.v4.app.NotificationCompat.Action> actionList) {
+
+
+        android.support.v4.app.NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.ic_stat_rsz_vidasemcancer)
                 .setLargeIcon(BitmapFactory.decodeResource(res, largeImage))
@@ -270,7 +285,15 @@ public class NotificationService extends IntentService {
                 .setPriority(8)
                 .setSound(soundUri)
                 .setContentTitle(getString(title))
-                .setContentText(getString(content)).build();
+                .setContentText(getString(content));
+
+        for (android.support.v4.app.NotificationCompat.Action action : actionList) {
+            builder.addAction(action);
+        }
+
+        notification = builder.build();
+
+
         notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
         notification.defaults |= Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE;
         notification.ledARGB = 0xFFFFA500;

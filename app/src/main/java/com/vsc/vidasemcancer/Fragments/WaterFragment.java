@@ -25,7 +25,6 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.vsc.vidasemcancer.Formatters.LiterAxisFormatter;
 import com.vsc.vidasemcancer.Models.Water;
-import com.vsc.vidasemcancer.Models.WaterMigration;
 import com.vsc.vidasemcancer.R;
 
 import java.text.DateFormat;
@@ -63,20 +62,10 @@ public class WaterFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (realmConfig == null) {
-            realmConfig = new RealmConfiguration.Builder(getActivity()).migration(new WaterMigration()).build();
-            Realm.setDefaultConfiguration(realmConfig);
-        }
-        // Open the Realm for the UI thread.
-
-        realm = Realm.getInstance(realmConfig);
-
-
+    public void onStart() {
+        super.onStart();
         String today = getTodayInString(0);
-
+        realm = realm.getDefaultInstance();
         RealmResults<Water> results = realm.where(Water.class).equalTo("date", today).findAll();
         if (results.isEmpty()) {
             realm.beginTransaction();
@@ -93,6 +82,20 @@ public class WaterFragment extends Fragment {
         calendar.add(Calendar.DAY_OF_MONTH, -7);
         Date sevenDaysAgo = new Date(calendar.getTimeInMillis());
         graphData = realm.where(Water.class).between("dDate", sevenDaysAgo, waterObject.getdDate()).findAll();
+
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        realm.close();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
 
         lineChart = (LineChart) getActivity().findViewById(R.id.chart);
 
@@ -123,10 +126,7 @@ public class WaterFragment extends Fragment {
         lineChart = (LineChart) rootView.findViewById(R.id.chart);
         imageView.setImageResource(R.drawable.ic_keyboard_arrow_up_black_24dp);
         imageView1.setImageResource(R.drawable.ic_keyboard_arrow_down_black_24dp);
-        imageView2.setImageResource(setImage());
-        textView.setText(getTextViewText());
 
-        lastWeekData();
         addButtonListener(rootView);
         return rootView;
     }

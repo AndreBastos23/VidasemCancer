@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
 
 import com.vsc.vidasemcancer.Models.PreferenceDate;
 import com.vsc.vidasemcancer.R;
@@ -176,8 +175,6 @@ public class NotificationMng {
 
     public static void initiateAll(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        Toast toast = Toast.makeText(context, "InitiateALl VSC", Toast.LENGTH_LONG);
-        toast.show();
         rememberBreathe(context, preferences);
         rememberFood(context, preferences);
         rememberMeditation(context, preferences);
