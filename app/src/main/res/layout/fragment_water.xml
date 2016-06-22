@@ -40,6 +40,7 @@
                 android:layout_gravity="center_vertical"
                 android:background="?android:selectableItemBackground"
                 android:clickable="true"
+                android:elevation="2dp"
                 android:minHeight="@android:dimen/notification_large_icon_height"
                 android:minWidth="@android:dimen/notification_large_icon_width"
                 android:scaleType="centerInside" />
@@ -52,6 +53,7 @@
                 android:layout_gravity="center_vertical"
                 android:background="?android:selectableItemBackground"
                 android:clickable="true"
+                android:elevation="2dp"
                 android:minHeight="@android:dimen/notification_large_icon_height"
                 android:minWidth="@android:dimen/notification_large_icon_width"
                 android:scaleType="centerInside" />
