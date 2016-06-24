@@ -28,7 +28,7 @@
         <activity
             android:name=".Activities.BaseActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/AppTheme" />
 
         <service
             android:name=".Services.NotificationService"

@@ -118,25 +118,25 @@ public class WaterManager {
         int objective = getObjectivePct();
 
         if (objective >= 100) {
-            return R.drawable.water_over100;
-        } else if (objective >= 90) {
-            return R.drawable.water_100;
-        } else if (objective >= 80) {
-            return R.drawable.water_80;
-        } else if (objective >= 70) {
-            return R.drawable.water_70;
-        } else if (objective >= 60) {
-            return R.drawable.water_60;
-        } else if (objective >= 50) {
-            return R.drawable.water_50;
-        } else if (objective >= 40) {
-            return R.drawable.water_40;
-        } else if (objective >= 30) {
-            return R.drawable.water_30;
-        } else if (objective >= 20) {
-            return R.drawable.water_20;
-        } else if (objective >= 10) {
             return R.drawable.water_10;
+        } else if (objective >= 90) {
+            return R.drawable.water_9;
+        } else if (objective >= 80) {
+            return R.drawable.water_8;
+        } else if (objective >= 70) {
+            return R.drawable.water_7;
+        } else if (objective >= 60) {
+            return R.drawable.water_6;
+        } else if (objective >= 50) {
+            return R.drawable.water_5;
+        } else if (objective >= 40) {
+            return R.drawable.water_4;
+        } else if (objective >= 30) {
+            return R.drawable.water_3;
+        } else if (objective >= 20) {
+            return R.drawable.water_2;
+        } else if (objective >= 10) {
+            return R.drawable.water_1;
         } else {
             return R.drawable.water_0;
         }

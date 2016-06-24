@@ -170,7 +170,7 @@ public class NotificationService extends IntentService {
         android.support.v4.app.NotificationCompat.Action action = new android.support.v4.app.NotificationCompat.Action(R.drawable.ic_stat_rsz_vidasemcancer, "Já bebi!", pIntent);
         List<android.support.v4.app.NotificationCompat.Action> actionList = new LinkedList<>();
         actionList.add(action);
-        buildNotification(res, soundUri, R.drawable.water_100, R.string.water_notification_title, R.string.water_notification_text, actionList);
+        buildNotification(res, soundUri, R.drawable.notiwater, R.string.water_notification_title, R.string.water_notification_text, actionList);
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
 
@@ -186,7 +186,7 @@ public class NotificationService extends IntentService {
 
         Resources res = this.getResources();
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        buildNotification(res, soundUri, R.drawable.ic_stat_image_wb_sunny, R.string.sun_notification_title, R.string.sun_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
+        buildNotification(res, soundUri, R.drawable.notisun, R.string.sun_notification_title, R.string.sun_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
 
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
@@ -202,7 +202,7 @@ public class NotificationService extends IntentService {
 
         Resources res = this.getResources();
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        buildNotification(res, soundUri, R.drawable.ic_stat_action_favorite_outline, R.string.breathe_notification_title, R.string.breathe_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
+        buildNotification(res, soundUri, R.drawable.notibreathing, R.string.breathe_notification_title, R.string.breathe_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
 
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
@@ -221,20 +221,20 @@ public class NotificationService extends IntentService {
 
         switch (notificationId) {
             case BREAKFAST_NOTIFICATION:
-                buildNotification(res, soundUri, R.drawable.ic_stat_maps_local_restaurant, R.string.eat_notification_title, R.string.eat_breakfast_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
+                buildNotification(res, soundUri, R.drawable.notifood, R.string.eat_notification_title, R.string.eat_breakfast_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
                 break;
             case LUNCH_NOTIFICATION:
-                buildNotification(res, soundUri, R.drawable.ic_stat_maps_local_restaurant, R.string.eat_notification_title, R.string.eat_lunch_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
+                buildNotification(res, soundUri, R.drawable.notifood, R.string.eat_notification_title, R.string.eat_lunch_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
                 break;
             case DINNER_NOTIFICATION:
-                buildNotification(res, soundUri, R.drawable.ic_stat_maps_local_restaurant, R.string.eat_notification_title, R.string.eat_dinner_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
+                buildNotification(res, soundUri, R.drawable.notifood, R.string.eat_notification_title, R.string.eat_dinner_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
                 break;
             case AFTERNOON_SNACK_NOTIFICATION:
             case MORNING_SNACK_NOTIFICATION:
-                buildNotification(res, soundUri, R.drawable.ic_stat_maps_local_restaurant, R.string.eat_notification_title, R.string.eat_snack_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
+                buildNotification(res, soundUri, R.drawable.notifood, R.string.eat_notification_title, R.string.eat_snack_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
                 break;
             default:
-                buildNotification(res, soundUri, R.drawable.ic_stat_maps_local_restaurant, R.string.eat_notification_title, R.string.eat_generic_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
+                buildNotification(res, soundUri, R.drawable.notifood, R.string.eat_notification_title, R.string.eat_generic_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
 
         }
 
@@ -252,7 +252,7 @@ public class NotificationService extends IntentService {
 
         Resources res = this.getResources();
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        buildNotification(res, soundUri, R.drawable.ic_stat_action_favorite_outline, R.string.sports_notification_title, R.string.sports_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
+        buildNotification(res, soundUri, R.drawable.notisport, R.string.sports_notification_title, R.string.sports_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
 
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
@@ -268,7 +268,7 @@ public class NotificationService extends IntentService {
 
         Resources res = this.getResources();
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        buildNotification(res, soundUri, R.drawable.ic_stat_action_favorite_outline, R.string.meditation_notification_title, R.string.meditation_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
+        buildNotification(res, soundUri, R.drawable.notimeditation, R.string.meditation_notification_title, R.string.meditation_notification_text, new LinkedList<android.support.v4.app.NotificationCompat.Action>());
 
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
