@@ -5,4 +5,6 @@ public interface ServerCallback {
 
     void onSuccess(String response);
 
+    void noResults();
+
 }

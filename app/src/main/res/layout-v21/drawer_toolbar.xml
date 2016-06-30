@@ -12,5 +12,12 @@
         android:background="#51E2CD"
         android:fitsSystemWindows="true"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/AppTheme"></android.support.v7.widget.Toolbar>
+        android:theme="@style/AppTheme">
+
+        <android.support.v7.widget.SearchView
+            android:id="@+id/posts.search.view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:queryHint="Procure por seus posts"></android.support.v7.widget.SearchView>
+    </android.support.v7.widget.Toolbar>
 </LinearLayout>

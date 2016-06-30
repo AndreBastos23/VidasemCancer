@@ -2,6 +2,7 @@ package com.vsc.vidasemcancer;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -21,7 +22,7 @@ public class RestOperation {
 
     //Services URL
     private static final String GET_POSTS = "http://vidasemcancer.com/wp-json/wp/v2/posts";
-
+    private static final String SEARCH_POSTS = "http://vidasemcancer.com/wp-json/wp/v2/posts?search=";
 
     //Data
     private List<Post> postList = new LinkedList<>();
@@ -57,7 +58,11 @@ public class RestOperation {
                     @Override
                     public void onResponse(String response) {
                         postList = postMapper.mapPosts(response);
-                        callback.onSuccess(response);
+                        if (postList.isEmpty()) {
+                            callback.noResults();
+                        } else {
+                            callback.onSuccess(response);
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -65,10 +70,46 @@ public class RestOperation {
 
             }
         });
-
         // Add the request to the RequestQueue.
         VidaSemCancer.getInstance().addToRequestQueue(stringRequest);
 
+    }
+
+    public void search(Context context, String query, final ServerCallback callback) {
+        Log.i("PROCURA", "A procurar por -- " + query + " -- ");
+        String[] terms = query.split(" +");
+        String url = SEARCH_POSTS;
+        for (int i = 0; i < terms.length; i++) {
+            url += terms[i];
+            if (i < terms.length - 1) {
+                url += (",");
+            }
+        }
+
+        Log.i("PROCURA", url);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+
+
+            @Override
+            public void onResponse(String response) {
+                postList = postMapper.mapPosts(response);
+                if (postList.isEmpty()) {
+                    Log.i("PROCURA", "Sucesso");
+                    callback.noResults();
+                } else {
+                    Log.i("PROCURA", "Fracasso");
+                    callback.onSuccess(response);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("PROCURA", "erro a procurar");
+                Log.e("PROCURA", error.getMessage());
+            }
+        });
+        VidaSemCancer.getInstance().addToRequestQueue(stringRequest);
     }
 
     /**

@@ -75,8 +75,7 @@ public class VolleyRequests implements Html.ImageGetter {
             return null;
         }
 
-        String url = imageSpan[0].getSource().replace("-300x94", "-1024x322");
-
+        String url = imageSpan[0].getSource().replace("-300x94", "-1024x322").replace("é", "\u00e9");
 
         return getImage(url);
 
