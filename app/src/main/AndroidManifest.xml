@@ -28,7 +28,12 @@
         <activity
             android:name=".Activities.BaseActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.ViewPostDetailsActivity"
+            android:label="Posts Activity"
+            android:parentActivityName=".Activities.BaseActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service
             android:name=".Services.NotificationService"
@@ -42,10 +47,6 @@
         </receiver>
         <receiver android:name=".Receivers.WaterReceiver"></receiver>
 
-        <activity
-            android:name=".Activities.ItemsListActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".Activities.RegisterActivity"
             android:label="@string/title_activity_register"

@@ -40,14 +40,14 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-        _signupLink.setOnClickListener(new View.OnClickListener() {
+        /*_signupLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Start the Signup activity
                 Intent intent = new Intent(getApplicationContext(), ItemsListActivity.class);
                 startActivityForResult(intent, REQUEST_SIGNUP);
             }
-        });
+        });*/
     }
 
 

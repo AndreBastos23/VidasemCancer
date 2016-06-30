@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.vsc.vidasemcancer.Fragments.HomeFragment;
 import com.vsc.vidasemcancer.Fragments.RecipeDetailsFragment;
@@ -20,6 +21,7 @@ import com.vsc.vidasemcancer.Fragments.RecipesListFragment;
 import com.vsc.vidasemcancer.Fragments.SettingsDialogFragment;
 import com.vsc.vidasemcancer.Fragments.SettingsFragment;
 import com.vsc.vidasemcancer.Fragments.WaterFragment;
+import com.vsc.vidasemcancer.Interface.OnPostClickListener;
 import com.vsc.vidasemcancer.Interface.OnRecipeSelected;
 import com.vsc.vidasemcancer.Managers.NotificationMng;
 import com.vsc.vidasemcancer.R;
@@ -28,7 +30,7 @@ import com.vsc.vidasemcancer.R;
 /**
  * The type Base activity.
  */
-public class BaseActivity extends AppCompatActivity implements OnRecipeSelected {
+public class BaseActivity extends AppCompatActivity implements OnRecipeSelected, OnPostClickListener {
 
 
     private DrawerLayout mDrawer;
@@ -210,4 +212,15 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
     }
 
 
+    @Override
+    public void onPostClick(View view, int position) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction =
+                fragmentManager.beginTransaction().addToBackStack(null);
+
+        RecipeDetailsFragment pm_fragment = new RecipeDetailsFragment();
+        fragmentTransaction.replace(R.id.flContent, pm_fragment);
+
+        fragmentTransaction.commit();
+    }
 }

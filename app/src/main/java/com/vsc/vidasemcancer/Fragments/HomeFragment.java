@@ -1,32 +1,30 @@
 package com.vsc.vidasemcancer.Fragments;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ListView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vsc.vidasemcancer.Adapters.PostAdapter;
+import com.vsc.vidasemcancer.Interface.ServerCallback;
 import com.vsc.vidasemcancer.R;
-import com.vsc.vidasemcancer.entities.Post;
-
-import java.io.IOException;
+import com.vsc.vidasemcancer.RestOperation;
 
 
 public class HomeFragment extends Fragment {
 
-    private Post[] postList;
-    private TextView mTextView;
+
+    private RestOperation restOperation;
+    private ListView listView;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
+
 
     public HomeFragment() {
 
@@ -36,53 +34,39 @@ public class HomeFragment extends Fragment {
         return new HomeFragment();
     }
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_home_screen, container, false);
-
-
+        View rootView = inflater.inflate(R.layout.fragment_posts_list, container, false);
+        restOperation = new RestOperation();
         return rootView;
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mTextView = (TextView) this.getActivity().findViewById(R.id.home_text_view);
-        if (mTextView != null) {
-            Toast toast = Toast.makeText(this.getActivity().getApplicationContext(), "sss", Toast.LENGTH_LONG);
-            toast.show();
-        }
+    public void onActivityCreated(Bundle bundle) {
+        super.onActivityCreated(Bundle.EMPTY);
 
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this.getActivity().getApplicationContext());
-        String url = "http://vidasemcancer.com/wp-json/wp/v2/posts";
+        final ProgressDialog progressDialog = new ProgressDialog(this.getActivity(), 0);
+        progressDialog.setTitle("Carregando seus posts");
+        progressDialog.show();
 
-// Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
+        mRecyclerView = (RecyclerView) this.getActivity().findViewById(R.id.my_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+
+        mLayoutManager = new LinearLayoutManager(this.getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
 
-                    @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        Log.i(String.valueOf(Log.INFO), response.substring(0, 500));
-                        try {
-                            postList = new ObjectMapper().reader(Post[].class).readValue(response);
-                            mTextView.setText(postList[0].getSlug());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
+        restOperation.getPosts(this.getActivity().getApplicationContext(), new ServerCallback() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-
+            public void onSuccess(String response) {
+                PostAdapter postAdapter = new PostAdapter(getActivity().getApplicationContext(), restOperation.getPostList());
+                mRecyclerView.setAdapter(postAdapter);
+                progressDialog.dismiss();
             }
         });
 
-// Add the request to the RequestQueue.
-        queue.add(stringRequest);
+
     }
 }
