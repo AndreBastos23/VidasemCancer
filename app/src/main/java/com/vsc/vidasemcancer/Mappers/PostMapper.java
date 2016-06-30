@@ -30,6 +30,13 @@ public final class PostMapper {
         } catch (IOException e) {
             Log.e("JSON", "Error mapping Posts");
         }
+
+        for (int i = 0; i < postArray.length; i++) {
+
+            postArray[i].getTitle().setRendered(android.text.Html.fromHtml(postArray[i].getTitle().getRendered()).toString());
+
+        }
+
         Log.i("MAPEADOR", "Array de posts mapeado");
         return Arrays.asList(postArray);
 
