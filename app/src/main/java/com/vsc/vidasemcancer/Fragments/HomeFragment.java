@@ -5,13 +5,13 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.vsc.vidasemcancer.Activities.SearchResultsActivity;
 import com.vsc.vidasemcancer.Adapters.PostAdapter;
@@ -24,9 +24,9 @@ public class HomeFragment extends Fragment {
 
 
     private RestOperation restOperation;
-    private ListView listView;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
 
     public HomeFragment() {
@@ -51,7 +51,33 @@ public class HomeFragment extends Fragment {
         super.onActivityCreated(Bundle.EMPTY);
 
         final ProgressDialog progressDialog = new ProgressDialog(this.getActivity(), 0);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeRefreshLayout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
+            @Override
+            public void onRefresh() {
+                restOperation.getPosts(getActivity().getApplicationContext(), new ServerCallback() {
+                    @Override
+                    public void onSuccess(String response) {
+                        PostAdapter postAdapter = new PostAdapter(getActivity().getApplicationContext(), restOperation.getPostList());
+                        mRecyclerView.setAdapter(postAdapter);
+                        progressDialog.dismiss();
+                    }
+
+                    @Override
+                    public void noResults() {
+                        Dialog dialog = new Dialog(getActivity().getApplicationContext());
+                        dialog.setTitle("Sem posts");
+                        dialog.show();
+                        progressDialog.dismiss();
+                    }
+
+                });
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+
+
+        });
 
         mRecyclerView = (RecyclerView) this.getActivity().findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -60,6 +86,7 @@ public class HomeFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         if (SearchResultsActivity.class.isInstance(this.getActivity())) {
+            mSwipeRefreshLayout.setEnabled(false);
             String query = ((SearchResultsActivity) this.getActivity()).getQuery();
             progressDialog.setTitle("Procurando seus posts");
             progressDialog.show();
