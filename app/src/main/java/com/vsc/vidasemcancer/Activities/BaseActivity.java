@@ -67,7 +67,7 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected,
 
     private void setupSearchBar() {
         search = (SearchView) findViewById(R.id.posts_search_view);
-        search.setQueryHint("SearchView");
+        search.setQueryHint("Procure por posts");
 
         //*** setOnQueryTextFocusChangeListener ***
         search.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {

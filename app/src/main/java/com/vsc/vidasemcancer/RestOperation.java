@@ -21,7 +21,7 @@ import java.util.List;
 public class RestOperation {
 
     //Services URL
-    private static final String GET_POSTS = "http://vidasemcancer.com/wp-json/wp/v2/posts";
+    private static final String GET_POSTS = "http://vidasemcancer.com/wp-json/wp/v2/posts?orderby=date";
     private static final String SEARCH_POSTS = "http://vidasemcancer.com/wp-json/wp/v2/posts?search=";
 
     //Data

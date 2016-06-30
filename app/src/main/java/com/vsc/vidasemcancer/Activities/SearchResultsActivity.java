@@ -66,7 +66,7 @@ public class SearchResultsActivity extends AppCompatActivity {
 
     private void setupSearchBar() {
         search = (SearchView) findViewById(R.id.posts_search_view);
-        search.setQueryHint("SearchView");
+        search.setQueryHint("Procure por posts");
 
         //*** setOnQueryTextFocusChangeListener ***
         search.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
@@ -86,7 +86,10 @@ public class SearchResultsActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 // TODO Auto-generated method stub
 
-                startActivity(new Intent(getApplicationContext(), SearchResultsActivity.class));
+                Intent intent = new Intent(getApplicationContext(), SearchResultsActivity.class);
+                intent.putExtra(SearchManager.QUERY, query);
+                intent.setAction(Intent.ACTION_SEARCH);
+                startActivity(intent);
 
                 return false;
             }

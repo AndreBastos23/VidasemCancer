@@ -27,7 +27,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-
+    private ProgressDialog progressDialog;
 
     public HomeFragment() {
 
@@ -50,8 +50,10 @@ public class HomeFragment extends Fragment {
     public void onActivityCreated(Bundle bundle) {
         super.onActivityCreated(Bundle.EMPTY);
 
-        final ProgressDialog progressDialog = new ProgressDialog(this.getActivity(), 0);
+        progressDialog = new ProgressDialog(this.getActivity(), 0);
         mSwipeRefreshLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeRefreshLayout);
+
+
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
             @Override
@@ -86,6 +88,7 @@ public class HomeFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         if (SearchResultsActivity.class.isInstance(this.getActivity())) {
+            mSwipeRefreshLayout.setRefreshing(false);
             mSwipeRefreshLayout.setEnabled(false);
             String query = ((SearchResultsActivity) this.getActivity()).getQuery();
             progressDialog.setTitle("Procurando seus posts");
@@ -112,6 +115,7 @@ public class HomeFragment extends Fragment {
             Log.i("FRAGMENT", "Feito");
             Log.i("FRAGMENT", restOperation.getPostList().size() + "");
         } else {
+            mSwipeRefreshLayout.setRefreshing(false);
             progressDialog.setTitle("Carregando seus posts");
             progressDialog.show();
             restOperation.getPosts(this.getActivity().getApplicationContext(), new ServerCallback() {
