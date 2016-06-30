@@ -64,12 +64,8 @@ public class VolleyRequests implements Html.ImageGetter {
     public Drawable getDrawable(String source) {
         //TODO: Find another way of getting the right image
         source = source.replace("-300x94", "-1024x322");
-        Drawable drawFromPath = new BitmapDrawable(VidaSemCancer.getInstance().getResources(), getImage(source));
-        int width = drawFromPath.getIntrinsicWidth();
-        int height = drawFromPath.getIntrinsicHeight();
-        drawFromPath.setBounds(0, 0, width > 0 ? width : 0, height > 0 ? height : 0);
+        return new BitmapDrawable(VidaSemCancer.getInstance().getResources(), getImage(source));
 
-        return drawFromPath;
 
     }
 
@@ -80,6 +76,8 @@ public class VolleyRequests implements Html.ImageGetter {
         }
 
         String url = imageSpan[0].getSource().replace("-300x94", "-1024x322");
+
+
         return getImage(url);
 
     }

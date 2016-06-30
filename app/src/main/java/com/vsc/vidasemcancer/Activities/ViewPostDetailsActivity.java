@@ -2,9 +2,6 @@ package com.vsc.vidasemcancer.Activities;
 
 
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spanned;
@@ -21,9 +18,7 @@ public class ViewPostDetailsActivity extends AppCompatActivity {
 
     private TextView postDetailsTV;
     private ImageView postDetailsIV;
-    private DrawerLayout mDrawer;
-    private NavigationView nvDrawer;
-    private ActionBarDrawerToggle drawerToggle;
+    private String title;
     private Toolbar myToolbar;
 
     @Override
@@ -32,6 +27,7 @@ public class ViewPostDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post_details);
         postDetailsTV = (TextView) findViewById(R.id.post_details_textview);
         postDetailsIV = (ImageView) findViewById(R.id.post_details_imageview);
+        title = getIntent().getStringExtra("com.vidasemcancer.title");
         setupToolbar();
     }
 
@@ -43,17 +39,18 @@ public class ViewPostDetailsActivity extends AppCompatActivity {
         VolleyRequests volleyRequests = new VolleyRequests();
 
 
-        Spanned spanned = android.text.Html.fromHtml(rendered, null, null);
+        Spanned spanned = android.text.Html.fromHtml(rendered, new VolleyRequests(), null);
+
         postDetailsIV.setImageBitmap(volleyRequests.getImageFromSpanned(spanned));
 
-        postDetailsTV.setText(spanned.toString().substring(1));
+        postDetailsTV.setText(spanned.toString());
     }
 
     private void setupToolbar() {
         myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Ola Ola 123");
+        getSupportActionBar().setTitle(title);
 
     }
 }

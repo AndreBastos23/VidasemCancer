@@ -98,6 +98,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("com.vidasemcancer.post", objects.get(taggedPosition).getContent().getRendered());
+            intent.putExtra("com.vidasemcancer.title", objects.get(taggedPosition).getTitle().getRendered());
             v.getContext().startActivity(intent);
         }
     }
