@@ -58,6 +58,7 @@ public class RestOperation {
                     @Override
                     public void onResponse(String response) {
                         postList = postMapper.mapPosts(response);
+                        postMapper.clearString(postList);
                         if (postList.isEmpty()) {
                             callback.noResults();
                         } else {
@@ -94,6 +95,7 @@ public class RestOperation {
             @Override
             public void onResponse(String response) {
                 postList = postMapper.mapPosts(response);
+                postMapper.clearString(postList);
                 if (postList.isEmpty()) {
                     Log.i("PROCURA", "Sucesso");
                     callback.noResults();

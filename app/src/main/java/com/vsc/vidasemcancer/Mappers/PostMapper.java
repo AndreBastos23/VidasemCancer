@@ -1,8 +1,6 @@
 package com.vsc.vidasemcancer.Mappers;
 
 
-import android.text.Html;
-import android.text.Spanned;
 import android.util.Log;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,19 +29,17 @@ public final class PostMapper {
             Log.e("JSON", "Error mapping Posts");
         }
 
-        for (int i = 0; i < postArray.length; i++) {
-
-            postArray[i].getTitle().setRendered(android.text.Html.fromHtml(postArray[i].getTitle().getRendered()).toString());
-
-        }
-
         Log.i("MAPEADOR", "Array de posts mapeado");
         return Arrays.asList(postArray);
 
     }
 
-    public Spanned getSpanned(Post post) {
-        return Html.fromHtml(post.getContent().getRendered());
+    public void clearString(List<Post> postList) {
+        for (Post post : postList) {
+
+            post.getTitle().setRendered(android.text.Html.fromHtml(post.getTitle().getRendered()).toString());
+
+        }
     }
 
 
