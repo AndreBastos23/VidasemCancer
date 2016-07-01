@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
+import com.vsc.vidasemcancer.R;
+
 public class SettingsDialogFragment extends DialogFragment {
 
     public static SettingsDialogFragment newInstance(int title, int message) {
@@ -25,7 +27,7 @@ public class SettingsDialogFragment extends DialogFragment {
         return new AlertDialog.Builder(getActivity())
                 .setTitle(title)
                 .setMessage(message)
-                .setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                .setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int button) {
                         getDialog().dismiss();
                     }

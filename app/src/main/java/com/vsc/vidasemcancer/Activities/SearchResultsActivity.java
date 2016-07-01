@@ -4,24 +4,31 @@ package com.vsc.vidasemcancer.Activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.vsc.vidasemcancer.Fragments.HomeFragment;
+import com.vsc.vidasemcancer.Fragments.SettingsDialogFragment;
+import com.vsc.vidasemcancer.Interface.NetworkChecker;
 import com.vsc.vidasemcancer.R;
 import com.vsc.vidasemcancer.RestOperation;
 
 /**
  * The type Search results activity.
  */
-public class SearchResultsActivity extends AppCompatActivity {
+public class SearchResultsActivity extends AppCompatActivity implements NetworkChecker {
     private DrawerLayout mDrawer;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
@@ -113,5 +120,23 @@ public class SearchResultsActivity extends AppCompatActivity {
         return query;
     }
 
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        boolean connected = activeNetworkInfo != null && activeNetworkInfo.isConnected();
+
+        if (!connected) {
+            Log.i("CONEXÂO", "Não há conexão");
+            showDialog(R.string.warning_no_connection_title, R.string.warning_no_connection);
+        }
+
+        return connected;
+    }
+
+    void showDialog(int title, int message) {
+        DialogFragment newFragment = SettingsDialogFragment.newInstance(title, message);
+        newFragment.show(getSupportFragmentManager(), "dialog");
+    }
 
 }
