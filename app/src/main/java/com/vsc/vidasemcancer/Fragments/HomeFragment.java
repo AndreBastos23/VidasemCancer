@@ -42,18 +42,8 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_posts_list, container, false);
-        restOperation = new RestOperation();
-        return rootView;
-    }
 
-    @Override
-    public void onActivityCreated(Bundle bundle) {
-        super.onActivityCreated(Bundle.EMPTY);
-
-        progressDialog = new ProgressDialog(this.getActivity(), 0);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeRefreshLayout);
-
-
+        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
             @Override
@@ -81,61 +71,71 @@ public class HomeFragment extends Fragment {
 
         });
 
-        mRecyclerView = (RecyclerView) this.getActivity().findViewById(R.id.my_recycler_view);
-        mRecyclerView.setHasFixedSize(true);
-
         mLayoutManager = new LinearLayoutManager(this.getActivity());
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        restOperation = new RestOperation();
+        progressDialog = new ProgressDialog(this.getActivity(), 0);
         if (SearchResultsActivity.class.isInstance(this.getActivity())) {
-            mSwipeRefreshLayout.setRefreshing(false);
-            mSwipeRefreshLayout.setEnabled(false);
-            String query = ((SearchResultsActivity) this.getActivity()).getQuery();
-            progressDialog.setTitle("Procurando seus posts");
-            progressDialog.show();
-            restOperation.search(this.getActivity().getApplicationContext(), query, new ServerCallback() {
-                @Override
-                public void onSuccess(String response) {
-                    Log.i("FRAGMENT", "Dados recebidos");
-                    PostAdapter postAdapter = new PostAdapter(getActivity().getApplicationContext(), restOperation.getPostList());
-                    mRecyclerView.setAdapter(postAdapter);
-                    progressDialog.dismiss();
-                }
+            showSearchResults(rootView);
 
-                @Override
-                public void noResults() {
-                    Log.i("FRAGMENT", "Sem resultados");
-                    Dialog dialog = new Dialog(getActivity().getApplicationContext());
-                    dialog.setTitle("Sem resultados");
-                    dialog.show();
-                    progressDialog.dismiss();
-                }
-            });
-
-            Log.i("FRAGMENT", "Feito");
-            Log.i("FRAGMENT", restOperation.getPostList().size() + "");
         } else {
-            mSwipeRefreshLayout.setRefreshing(false);
-            progressDialog.setTitle("Carregando seus posts");
-            progressDialog.show();
-            restOperation.getPosts(this.getActivity().getApplicationContext(), new ServerCallback() {
-                @Override
-                public void onSuccess(String response) {
-                    PostAdapter postAdapter = new PostAdapter(getActivity().getApplicationContext(), restOperation.getPostList());
-                    mRecyclerView.setAdapter(postAdapter);
-                    progressDialog.dismiss();
-                }
-
-                @Override
-                public void noResults() {
-                    Dialog dialog = new Dialog(getActivity().getApplicationContext());
-                    dialog.setTitle("Sem posts");
-                    dialog.show();
-                    progressDialog.dismiss();
-                }
-            });
+            showPosts();
         }
 
+
+        Log.i("FRAGMENT", "Feito");
+        Log.i("FRAGMENT", restOperation.getPostList().size() + "");
+
+        return rootView;
+    }
+
+    public void showPosts() {
+        mSwipeRefreshLayout.setRefreshing(false);
+        progressDialog.setTitle("Carregando seus posts");
+        progressDialog.show();
+        restOperation.getPosts(this.getActivity().getApplicationContext(), new ServerCallback() {
+            @Override
+            public void onSuccess(String response) {
+                PostAdapter postAdapter = new PostAdapter(getActivity().getApplicationContext(), restOperation.getPostList());
+                mRecyclerView.setAdapter(postAdapter);
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void noResults() {
+                Dialog dialog = new Dialog(getActivity().getApplicationContext());
+                dialog.setTitle("Sem posts");
+                dialog.show();
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+
+    public void showSearchResults(View rootView) {
+        mSwipeRefreshLayout.setRefreshing(false);
+        mSwipeRefreshLayout.setEnabled(false);
+        String query = ((SearchResultsActivity) this.getActivity()).getQuery();
+        progressDialog.setTitle("Procurando seus posts");
+        progressDialog.show();
+        restOperation.search(this.getActivity().getApplicationContext(), query, new ServerCallback() {
+            @Override
+            public void onSuccess(String response) {
+                Log.i("FRAGMENT", "Dados recebidos");
+                PostAdapter postAdapter = new PostAdapter(getActivity().getApplicationContext(), restOperation.getPostList());
+                mRecyclerView.setAdapter(postAdapter);
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void noResults() {
+                Log.i("FRAGMENT", "Sem resultados");
+                progressDialog.dismiss();
+            }
+        });
 
     }
 }
