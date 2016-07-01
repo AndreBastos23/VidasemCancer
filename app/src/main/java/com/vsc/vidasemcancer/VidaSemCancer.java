@@ -7,6 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.onesignal.OneSignal;
 import com.vsc.vidasemcancer.Utils.LruBitmapCache;
 
 import io.realm.Realm;
@@ -30,6 +31,7 @@ public class VidaSemCancer extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        OneSignal.startInit(this).init();
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this).build();
         Realm.setDefaultConfiguration(realmConfiguration);
         mInstance = this;
