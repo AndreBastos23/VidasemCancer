@@ -3,16 +3,23 @@ package com.vsc.vidasemcancer.Activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.vsc.vidasemcancer.Fragments.HomeFragment;
 import com.vsc.vidasemcancer.Fragments.RecipeDetailsFragment;
@@ -20,6 +27,7 @@ import com.vsc.vidasemcancer.Fragments.RecipesListFragment;
 import com.vsc.vidasemcancer.Fragments.SettingsDialogFragment;
 import com.vsc.vidasemcancer.Fragments.SettingsFragment;
 import com.vsc.vidasemcancer.Fragments.WaterFragment;
+import com.vsc.vidasemcancer.Interface.OnPostClickListener;
 import com.vsc.vidasemcancer.Interface.OnRecipeSelected;
 import com.vsc.vidasemcancer.Managers.NotificationMng;
 import com.vsc.vidasemcancer.R;
@@ -28,19 +36,21 @@ import com.vsc.vidasemcancer.R;
 /**
  * The type Base activity.
  */
-public class BaseActivity extends AppCompatActivity implements OnRecipeSelected {
+public class BaseActivity extends AppCompatActivity implements OnRecipeSelected, OnPostClickListener {
 
 
     private DrawerLayout mDrawer;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
     private Toolbar toolbar;
+    private SearchView search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         setupToolbar();
+
 
         //Code to execute on application's first run
         if (savedInstanceState == null) {
@@ -55,9 +65,49 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
 
     }
 
+    private void setupSearchBar() {
+        search = (SearchView) findViewById(R.id.posts_search_view);
+        search.setQueryHint("Procure por posts");
+
+        //*** setOnQueryTextFocusChangeListener ***
+        search.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                // TODO Auto-generated method stub
+
+
+            }
+        });
+
+        //*** setOnQueryTextListener ***
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // TODO Auto-generated method stub
+                Intent intent = new Intent(getApplicationContext(), SearchResultsActivity.class);
+                intent.putExtra(SearchManager.QUERY, query);
+                intent.setAction(Intent.ACTION_SEARCH);
+                startActivity(intent);
+
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // TODO Auto-generated method stub
+
+
+                return false;
+            }
+        });
+    }
+
     private void handleInitialFragment() {
         Fragment fragment = null;
-        Class fragmentClass = WaterFragment.class;
+        Class fragmentClass = HomeFragment.class;
         try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
@@ -98,6 +148,7 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
         mDrawer.addDrawerListener(drawerToggle);
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         setupDrawerContent(nvDrawer);
+        setupSearchBar();
     }
 
 
@@ -168,6 +219,7 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         drawerToggle.syncState();
+
     }
 
     @Override
@@ -209,5 +261,25 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected 
         newFragment.show(getSupportFragmentManager(), "dialog");
     }
 
+
+    @Override
+    public void onPostClick(View view, int position) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction =
+                fragmentManager.beginTransaction().addToBackStack(null);
+
+        RecipeDetailsFragment pm_fragment = new RecipeDetailsFragment();
+        fragmentTransaction.replace(R.id.flContent, pm_fragment);
+
+        fragmentTransaction.commit();
+    }
+
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 
 }

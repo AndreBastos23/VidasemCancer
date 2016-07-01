@@ -127,5 +127,6 @@
     <string name="eat.generic.notification.text">Já Comeu?</string>
     <string name="menu_home">Bem Vindo</string>
     <string name="water.notification.amount">Hoje já bebeu:</string>
+    <string name="search.title">Procura</string>
 
 </resources>

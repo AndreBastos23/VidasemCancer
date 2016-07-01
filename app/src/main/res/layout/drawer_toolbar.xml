@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <android.support.v7.widget.Toolbar
-        xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -13,5 +13,11 @@
         android:fitsSystemWindows="true"
         android:minHeight="?attr/actionBarSize"
         app:theme="@style/AppTheme">
+
+        <android.support.v7.widget.SearchView
+            android:id="@+id/posts.search.view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:queryHint="Procure por seus posts"></android.support.v7.widget.SearchView>
     </android.support.v7.widget.Toolbar>
 </LinearLayout>
