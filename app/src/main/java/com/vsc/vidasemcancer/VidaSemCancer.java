@@ -13,17 +13,26 @@ import com.vsc.vidasemcancer.Utils.LruBitmapCache;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
+
 /**
- * Created by Eduardo on 13/06/2016.
+ * The type Vida sem cancer.
  */
 public class VidaSemCancer extends Application {
 
+    /**
+     * The constant TAG.
+     */
     public static final String TAG = VidaSemCancer.class
             .getSimpleName();
     private static VidaSemCancer mInstance;
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static synchronized VidaSemCancer getInstance() {
         return mInstance;
     }
@@ -37,6 +46,11 @@ public class VidaSemCancer extends Application {
         mInstance = this;
     }
 
+    /**
+     * Gets request queue.
+     *
+     * @return the request queue
+     */
     public RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
             mRequestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -45,6 +59,11 @@ public class VidaSemCancer extends Application {
         return mRequestQueue;
     }
 
+    /**
+     * Gets image loader.
+     *
+     * @return the image loader
+     */
     public ImageLoader getImageLoader() {
         getRequestQueue();
         if (mImageLoader == null) {
@@ -54,17 +73,35 @@ public class VidaSemCancer extends Application {
         return this.mImageLoader;
     }
 
+    /**
+     * Add to request queue.
+     *
+     * @param <T> the type parameter
+     * @param req the req
+     * @param tag the tag
+     */
     public <T> void addToRequestQueue(Request<T> req, String tag) {
         // set the default tag if tag is empty
         req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
         getRequestQueue().add(req);
     }
 
+    /**
+     * Add to request queue.
+     *
+     * @param <T> the type parameter
+     * @param req the req
+     */
     public <T> void addToRequestQueue(Request<T> req) {
         req.setTag(TAG);
         getRequestQueue().add(req);
     }
 
+    /**
+     * Cancel pending requests.
+     *
+     * @param tag the tag
+     */
     public void cancelPendingRequests(Object tag) {
         if (mRequestQueue != null) {
             mRequestQueue.cancelAll(tag);
