@@ -18,6 +18,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -27,6 +28,7 @@ import com.vsc.vidasemcancer.Fragments.RecipesListFragment;
 import com.vsc.vidasemcancer.Fragments.SettingsDialogFragment;
 import com.vsc.vidasemcancer.Fragments.SettingsFragment;
 import com.vsc.vidasemcancer.Fragments.WaterFragment;
+import com.vsc.vidasemcancer.Interface.NetworkChecker;
 import com.vsc.vidasemcancer.Interface.OnPostClickListener;
 import com.vsc.vidasemcancer.Interface.OnRecipeSelected;
 import com.vsc.vidasemcancer.Managers.NotificationMng;
@@ -36,7 +38,7 @@ import com.vsc.vidasemcancer.R;
 /**
  * The type Base activity.
  */
-public class BaseActivity extends AppCompatActivity implements OnRecipeSelected, OnPostClickListener {
+public class BaseActivity extends AppCompatActivity implements OnRecipeSelected, OnPostClickListener, NetworkChecker {
 
 
     private DrawerLayout mDrawer;
@@ -132,7 +134,7 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected,
         fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.flContent, fragment).commit();
 
         //show first time dialog
-        showDialog();
+        showDialog(R.string.alert_dialog_title, R.string.alert_dialog_message);
     }
 
     private void handleNotifications() {
@@ -256,8 +258,8 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected,
     /**
      * Show dialog.
      */
-    void showDialog() {
-        DialogFragment newFragment = SettingsDialogFragment.newInstance(R.string.alert_dialog_title, R.string.alert_dialog_message);
+    void showDialog(int title, int message) {
+        DialogFragment newFragment = SettingsDialogFragment.newInstance(title, message);
         newFragment.show(getSupportFragmentManager(), "dialog");
     }
 
@@ -275,11 +277,19 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected,
     }
 
 
-    private boolean isNetworkAvailable() {
+    public boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        boolean connected = activeNetworkInfo != null && activeNetworkInfo.isConnected();
+
+        if (!connected) {
+            Log.i("CONEXÂO", "Não há conexão");
+            showDialog(R.string.warning_no_connection_title, R.string.warning_no_connection);
+        }
+
+        return connected;
     }
+
 
 }

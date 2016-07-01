@@ -1,6 +1,5 @@
 package com.vsc.vidasemcancer.Fragments;
 
-import android.app.Dialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -12,9 +11,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.vsc.vidasemcancer.Activities.SearchResultsActivity;
 import com.vsc.vidasemcancer.Adapters.PostAdapter;
+import com.vsc.vidasemcancer.Interface.NetworkChecker;
 import com.vsc.vidasemcancer.Interface.ServerCallback;
 import com.vsc.vidasemcancer.R;
 import com.vsc.vidasemcancer.RestOperation;
@@ -28,6 +29,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ProgressDialog progressDialog;
+    private TextView mTextView;
 
     public HomeFragment() {
 
@@ -42,54 +44,65 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_posts_list, container, false);
-
-        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-
-            @Override
-            public void onRefresh() {
-                restOperation.getPosts(getActivity().getApplicationContext(), new ServerCallback() {
-                    @Override
-                    public void onSuccess(String response) {
-                        PostAdapter postAdapter = new PostAdapter(getActivity().getApplicationContext(), restOperation.getPostList());
-                        mRecyclerView.setAdapter(postAdapter);
-                        progressDialog.dismiss();
-                    }
-
-                    @Override
-                    public void noResults() {
-                        Dialog dialog = new Dialog(getActivity().getApplicationContext());
-                        dialog.setTitle("Sem posts");
-                        dialog.show();
-                        progressDialog.dismiss();
-                    }
-
-                });
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-
-
-        });
-
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
+        mTextView = (TextView) rootView.findViewById(R.id.noResultsTextView);
+        if (((NetworkChecker) getActivity()).isNetworkAvailable()) {
 
-        restOperation = new RestOperation();
-        progressDialog = new ProgressDialog(this.getActivity(), 0);
-        if (SearchResultsActivity.class.isInstance(this.getActivity())) {
-            showSearchResults(rootView);
+            mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
+                @Override
+                public void onRefresh() {
+                    restOperation.getPosts(getActivity().getApplicationContext(), new ServerCallback() {
+                        @Override
+                        public void onSuccess(String response) {
+                            PostAdapter postAdapter = new PostAdapter(getActivity().getApplicationContext(), restOperation.getPostList());
+                            mRecyclerView.setAdapter(postAdapter);
+                            hasContent(true);
+                            progressDialog.dismiss();
+                        }
+
+                        @Override
+                        public void noResults() {
+                            hasContent(false);
+                            progressDialog.dismiss();
+                        }
+
+                    });
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
+
+
+            });
+
+
+            mRecyclerView.setHasFixedSize(true);
+            mRecyclerView.setLayoutManager(mLayoutManager);
+
+            restOperation = new RestOperation();
+            progressDialog = new ProgressDialog(this.getActivity(), 0);
+            if (SearchResultsActivity.class.isInstance(this.getActivity())) {
+                showSearchResults();
+            } else {
+                showPosts();
+            }
+
+            Log.i("HOME_FRAGMENT", "Feito");
+            Log.i("HOME_FRAGMENT", restOperation.getPostList().size() + "");
         } else {
-            showPosts();
+            hasContent(false);
+
+
+            Log.i("HOME_FRAGMENT", "Não há conexão");
         }
 
-
-        Log.i("FRAGMENT", "Feito");
-        Log.i("FRAGMENT", restOperation.getPostList().size() + "");
-
         return rootView;
+    }
+
+    private void hasContent(boolean b) {
+        mRecyclerView.setVisibility(b ? View.VISIBLE : View.GONE);
+        mTextView.setVisibility(!b ? View.VISIBLE : View.GONE);
     }
 
     public void showPosts() {
@@ -101,21 +114,22 @@ public class HomeFragment extends Fragment {
             public void onSuccess(String response) {
                 PostAdapter postAdapter = new PostAdapter(getActivity().getApplicationContext(), restOperation.getPostList());
                 mRecyclerView.setAdapter(postAdapter);
+                hasContent(true);
                 progressDialog.dismiss();
+
             }
 
             @Override
             public void noResults() {
-                Dialog dialog = new Dialog(getActivity().getApplicationContext());
-                dialog.setTitle("Sem posts");
-                dialog.show();
+                Log.i("HOME_FRAGMENT", "Sem resultados");
+                hasContent(false);
                 progressDialog.dismiss();
+
             }
         });
     }
 
-
-    public void showSearchResults(View rootView) {
+    public void showSearchResults() {
         mSwipeRefreshLayout.setRefreshing(false);
         mSwipeRefreshLayout.setEnabled(false);
         String query = ((SearchResultsActivity) this.getActivity()).getQuery();
@@ -124,16 +138,19 @@ public class HomeFragment extends Fragment {
         restOperation.search(this.getActivity().getApplicationContext(), query, new ServerCallback() {
             @Override
             public void onSuccess(String response) {
-                Log.i("FRAGMENT", "Dados recebidos");
+                Log.i("HOME_FRAGMENT", "Dados recebidos");
                 PostAdapter postAdapter = new PostAdapter(getActivity().getApplicationContext(), restOperation.getPostList());
                 mRecyclerView.setAdapter(postAdapter);
                 progressDialog.dismiss();
+                hasContent(true);
             }
 
             @Override
             public void noResults() {
-                Log.i("FRAGMENT", "Sem resultados");
+                Log.i("HOME_FRAGMENT", "Sem resultados");
+                hasContent(false);
                 progressDialog.dismiss();
+
             }
         });
 
