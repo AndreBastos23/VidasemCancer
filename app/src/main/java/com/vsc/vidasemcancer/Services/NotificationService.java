@@ -125,7 +125,7 @@ public class NotificationService extends IntentService {
         daytime.set(Calendar.MINUTE, wakeUp.getMinute());
 
         Calendar now = Calendar.getInstance();
-        if (now.after(nightTime) || now.before(daytime)) {
+        if (now.after(nightTime) && now.before(daytime)) {
             return true;
         }
 
@@ -285,7 +285,8 @@ public class NotificationService extends IntentService {
                 .setPriority(8)
                 .setSound(soundUri)
                 .setContentTitle(getString(title))
-                .setContentText(getString(content));
+                .setContentText(getString(content))
+                .setVisibility(Notification.VISIBILITY_PUBLIC);
 
         for (android.support.v4.app.NotificationCompat.Action action : actionList) {
             builder.addAction(action);
