@@ -1,5 +1,6 @@
 package com.vsc.vidasemcancer.Activities;
 
+import android.Manifest;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -7,12 +8,15 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +26,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.onesignal.OneSignal;
 import com.vsc.vidasemcancer.Fragments.HomeFragment;
 import com.vsc.vidasemcancer.Fragments.RecipeDetailsFragment;
 import com.vsc.vidasemcancer.Fragments.RecipesListFragment;
@@ -46,7 +51,7 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected,
     private ActionBarDrawerToggle drawerToggle;
     private Toolbar toolbar;
     private SearchView search;
-
+    private int permissionCheck = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,8 +69,66 @@ public class BaseActivity extends AppCompatActivity implements OnRecipeSelected,
             }
         }
 
+        permissionCheck = ContextCompat.checkSelfPermission(BaseActivity.this,
+                Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        OneSignal.promptLocation();
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(BaseActivity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(BaseActivity.this,
+                    Manifest.permission.READ_CONTACTS)) {
+                OneSignal.promptLocation();
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(BaseActivity.this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        1);
+
+                OneSignal.promptLocation();
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+
 
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    OneSignal.promptLocation();
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
 
     private void setupSearchBar() {
         search = (SearchView) findViewById(R.id.posts_search_view);
