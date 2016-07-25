@@ -121,7 +121,7 @@
     <string name="notification.settings.sleep.title">Hora de dormir</string>
     <string name="eat.morningsnack.notification">eat.morningsnack.notification</string>
     <string name="eat.afternoonsnack.notification">eat.afternoonsnack.notification</string>
-    <string name="eat.snack.notification.text">Hora para um snack</string>
+    <string name="eat.snack.notification.text">Hora de lanchar</string>
     <string name="eat.generic.notification.text">Já Comeu?</string>
     <string name="menu_home">Bem Vindo</string>
     <string name="water.notification.amount">Hoje já bebeu:</string>

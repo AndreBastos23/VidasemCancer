@@ -108,4 +108,10 @@ public class VidaSemCancer extends Application {
         }
     }
 
+    public void cancelPendingRequests() {
+        if (mRequestQueue != null) {
+            mRequestQueue.cancelAll(TAG);
+        }
+    }
+
 }

@@ -19,6 +19,7 @@ import com.vsc.vidasemcancer.Interface.NetworkChecker;
 import com.vsc.vidasemcancer.Interface.ServerCallback;
 import com.vsc.vidasemcancer.R;
 import com.vsc.vidasemcancer.RestOperation;
+import com.vsc.vidasemcancer.VidaSemCancer;
 
 
 public class HomeFragment extends Fragment {
@@ -39,6 +40,12 @@ public class HomeFragment extends Fragment {
         return new HomeFragment();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        VidaSemCancer.getInstance().cancelPendingRequests();
+
+    }
 
     @Nullable
     @Override
@@ -100,6 +107,7 @@ public class HomeFragment extends Fragment {
         return rootView;
     }
 
+
     private void hasContent(boolean b) {
         mRecyclerView.setVisibility(b ? View.VISIBLE : View.GONE);
         mTextView.setVisibility(!b ? View.VISIBLE : View.GONE);
@@ -155,4 +163,6 @@ public class HomeFragment extends Fragment {
         });
 
     }
+
+
 }

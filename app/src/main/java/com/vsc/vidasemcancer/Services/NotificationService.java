@@ -111,7 +111,7 @@ public class NotificationService extends IntentService {
     }
 
     private boolean nightTime() {
-        Boolean night = false;
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         PreferenceDate sleep = new PreferenceDate(sharedPreferences.getString(getString(R.string.notification_settings_sleep_key), "22:00"));
         PreferenceDate wakeUp = new PreferenceDate(sharedPreferences.getString(getString(R.string.notification_settings_wakeUp_key), "09:00"));
@@ -125,11 +125,19 @@ public class NotificationService extends IntentService {
         daytime.set(Calendar.MINUTE, wakeUp.getMinute());
 
         Calendar now = Calendar.getInstance();
-        if (now.after(nightTime) && now.before(daytime)) {
-            return true;
+
+        if (nightTime.before(daytime)) {
+            if (now.after(nightTime) && now.before(daytime)) {
+                return true;
+            }
+        } else {
+            if (now.before(daytime) || now.after(nightTime)) {
+                return true;
+            }
         }
 
-        return night;
+
+        return false;
     }
 
     private boolean isObjectiveCompleted(Realm realm) {
